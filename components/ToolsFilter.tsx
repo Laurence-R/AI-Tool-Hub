@@ -99,7 +99,7 @@ export function ToolsFilter({
                             className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-body text-foreground/60 hover:text-primary hover:bg-primary/10 transition-colors duration-200 cursor-pointer"
                             aria-label="清除所有篩選"
                         >
-                            <X className="w-3 h-3" />
+                            清除 <X className="w-3 h-3" />
                         </button>
                     )}
                 </div>
