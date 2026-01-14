@@ -1,15 +1,10 @@
 "use client"
 
-import { Search, SlidersHorizontal, ChevronDown, Star, ArrowDownAZ, X } from "lucide-react"
+import { Search, SlidersHorizontal, ChevronDown, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef } from "react"
-
-interface ToolsSearchProps {
-    searchQuery: string
-    setSearchQuery: (query: string) => void
-    sortBy: string
-    setSortBy: (sort: string) => void
-}
+import type { ToolsSearchProps } from "@/types"
+import { SORT_OPTIONS } from "@/constants"
 
 export function ToolsSearch({
     searchQuery,
@@ -31,13 +26,8 @@ export function ToolsSearch({
         return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [])
 
-    const sortOptions = [
-        { value: "rating", label: "評分最高", icon: Star },
-        { value: "name", label: "名稱排序", icon: ArrowDownAZ }
-    ]
-
-    const currentOption = sortOptions.find(opt => opt.value === sortBy) || sortOptions[0]
-    const CurrentIcon = currentOption.icon
+    const currentOption = SORT_OPTIONS.find(opt => opt.value === sortBy) || SORT_OPTIONS[0]
+    const CurrentIcon = currentOption?.icon
 
     return (
         <div className="relative z-50">
@@ -94,7 +84,7 @@ export function ToolsSearch({
                                 aria-haspopup="listbox"
                             >
                                 <div className="flex items-center gap-3">
-                                    <CurrentIcon className="w-4 h-4 text-foreground/60 group-hover:text-primary transition-colors duration-200" />
+                                    {CurrentIcon && <CurrentIcon className="w-4 h-4 text-foreground/60 group-hover:text-primary transition-colors duration-200" />}
                                     <span className="text-sm font-medium">{currentOption.label}</span>
                                 </div>
                                 <ChevronDown className={`w-4 h-4 text-foreground/60 group-hover:text-primary transition-all duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -107,7 +97,7 @@ export function ToolsSearch({
                                     role="listbox"
                                     aria-label="排序選項"
                                 >
-                                    {sortOptions.map((option) => {
+                                    {SORT_OPTIONS.map((option) => {
                                         const OptionIcon = option.icon
                                         return (
                                             <button
@@ -124,11 +114,11 @@ export function ToolsSearch({
                                                 role="option"
                                                 aria-selected={sortBy === option.value}
                                             >
-                                                <OptionIcon className={`w-4 h-4 transition-colors duration-150 ${
+                                                {OptionIcon && <OptionIcon className={`w-4 h-4 transition-colors duration-150 ${
                                                     sortBy === option.value 
                                                         ? 'text-primary' 
                                                         : 'text-foreground/40 group-hover/item:text-primary'
-                                                }`} />
+                                                }`} />}
                                                 <span className={`text-sm ${sortBy === option.value ? 'font-semibold' : 'font-medium'}`}>
                                                     {option.label}
                                                 </span>

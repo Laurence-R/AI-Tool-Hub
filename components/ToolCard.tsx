@@ -3,22 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Star, ExternalLink, Tag } from "lucide-react"
-
-interface Tool {
-    id: number
-    name: string
-    description: string
-    category: string
-    pricing: string
-    rating: number
-    logo: string
-    tags: string[]
-    url: string
-}
-
-interface ToolCardProps {
-    tool: Tool
-}
+import type { Tool, ToolCardProps } from "@/types"
 
 export function ToolCard({ tool }: ToolCardProps) {
     const getPricingLabel = (pricing: string) => {

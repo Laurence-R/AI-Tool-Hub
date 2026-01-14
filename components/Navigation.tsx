@@ -35,6 +35,7 @@ import {
     CommandItem,
     CommandList,
 } from "@/components/ui/command"
+import { NAV_LINKS, SEARCH_ITEMS } from "@/constants"
 
 export function Navigation() {
     const { theme, setTheme } = useTheme()
@@ -62,27 +63,6 @@ export function Navigation() {
         setTheme(theme === "dark" ? "light" : "dark")
     }
 
-    const navLinks = [
-        { href: "/", label: "首頁" },
-        { href: "/tools", label: "探索工具" },
-        { href: "/categories", label: "分類" },
-        { href: "/compare", label: "比較" },
-        { href: "/blog", label: "部落格" },
-    ]
-
-    const searchItems = [
-        { href: "/", label: "首頁", category: "頁面" },
-        { href: "/tools", label: "探索工具", category: "頁面" },
-        { href: "/categories", label: "分類", category: "頁面" },
-        { href: "/compare", label: "工具比較", category: "頁面" },
-        { href: "/blog", label: "部落格", category: "頁面" },
-        { href: "/login", label: "登入", category: "頁面" },
-        { href: "/tools?category=開發工具", label: "開發工具", category: "分類" },
-        { href: "/tools?category=設計工具", label: "設計工具", category: "分類" },
-        { href: "/tools?category=AI助手", label: "AI 助手", category: "分類" },
-        { href: "/tools?category=生產力", label: "生產力工具", category: "分類" },
-    ]
-
     const handleSearch = (href: string) => {
         setSearchOpen(false)
         router.push(href)
@@ -107,7 +87,7 @@ export function Navigation() {
 
                             {/* Desktop Navigation Links */}
                             <div className="hidden md:flex items-center space-x-8">
-                                {navLinks.map((link) => (
+                                {NAV_LINKS.map((link) => (
                                     <Link
                                         key={link.href}
                                         href={link.href}
@@ -212,7 +192,7 @@ export function Navigation() {
                                             <SheetTitle>選單</SheetTitle>
                                         </SheetHeader>
                                         <div className="flex flex-col space-y-4 mt-8">
-                                            {navLinks.map((link) => (
+                                            {NAV_LINKS.map((link) => (
                                                 <Link
                                                     key={link.href}
                                                     href={link.href}
@@ -283,11 +263,11 @@ export function Navigation() {
                         <CommandList>
                             <CommandEmpty>找不到相關結果</CommandEmpty>
                             {Object.entries(
-                                searchItems.reduce((acc, item) => {
+                                SEARCH_ITEMS.reduce((acc, item) => {
                                     if (!acc[item.category]) acc[item.category] = []
                                     acc[item.category].push(item)
                                     return acc
-                                }, {} as Record<string, typeof searchItems>)
+                                }, {} as Record<string, typeof SEARCH_ITEMS>)
                             ).map(([category, items]) => (
                                 <CommandGroup key={category} heading={category}>
                                     {items.map((item) => (
