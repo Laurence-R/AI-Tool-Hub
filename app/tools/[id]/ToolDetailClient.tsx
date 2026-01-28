@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 import { SafeImage } from "@/components/ui/safe-image"
 import { 
     Star, 
@@ -25,6 +27,8 @@ interface ToolDetailClientProps {
 }
 
 export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) {
+    const router = useRouter()
+    const { data: session } = useSession()
     const [activeTab, setActiveTab] = useState<"overview" | "pricing" | "reviews">("overview")
     const [reviewCount, setReviewCount] = useState<number>(0)
     const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites()
@@ -49,6 +53,12 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
     }, [tool.id])
 
     const handleToggleFavorite = () => {
+        // 未登入時導向登入頁面
+        if (!session) {
+            router.push(`/login?callbackUrl=/tools/${tool.id}`)
+            return
+        }
+        
         if (isFav) {
             removeFromFavorites(toolIdStr)
         } else {
