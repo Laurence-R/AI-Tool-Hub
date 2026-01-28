@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle } from "lucide-react"
+import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -36,6 +36,7 @@ import {
     CommandList,
 } from "@/components/ui/command"
 import { NAV_LINKS, SEARCH_ITEMS } from "@/constants"
+import { useCompare, useFavorites } from "@/contexts"
 
 export function Navigation() {
     const { theme, setTheme } = useTheme()
@@ -44,6 +45,10 @@ export function Navigation() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
     const [isLoggedIn] = useState(false) // 模擬登入狀態
+    
+    // 比較和收藏狀態
+    const { compareCount } = useCompare()
+    const { favoritesCount } = useFavorites()
 
     useEffect(() => {
         setMounted(true)
@@ -100,6 +105,42 @@ export function Navigation() {
 
                             {/* Right Side Actions */}
                             <div className="flex items-center space-x-2">
+                                {/* Compare Button */}
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="relative text-foreground hover:text-primary"
+                                    aria-label="比較工具"
+                                    asChild
+                                >
+                                    <Link href="/compare">
+                                        <GitCompare className="w-5 h-5" />
+                                        {compareCount > 0 && (
+                                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">
+                                                {compareCount}
+                                            </span>
+                                        )}
+                                    </Link>
+                                </Button>
+
+                                {/* Favorites Button */}
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="relative text-foreground hover:text-red-500"
+                                    aria-label="收藏"
+                                    asChild
+                                >
+                                    <Link href="/favorites">
+                                        <Heart className="w-5 h-5" />
+                                        {favoritesCount > 0 && (
+                                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                                                {favoritesCount}
+                                            </span>
+                                        )}
+                                    </Link>
+                                </Button>
+
                                 {/* Search Icon */}
                                 <Button
                                     variant="ghost"

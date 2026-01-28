@@ -3,7 +3,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Star, ExternalLink, Tag } from "lucide-react"
-import type { Tool, ToolCardProps } from "@/types"
+import type { ToolCardProps } from "@/types"
+import { CompareButton } from "./CompareButton"
+import { FavoriteButton } from "./FavoriteButton"
 
 export function ToolCard({ tool }: ToolCardProps) {
     const getPricingLabel = (pricing: string) => {
@@ -41,7 +43,7 @@ export function ToolCard({ tool }: ToolCardProps) {
     return (
         <Link href={`/tools/${tool.id}`} className="block group">
             <div className="glass-card rounded-2xl p-6 hover:shadow-lg transition-all duration-300 cursor-pointer">
-                {/* Logo 和定價 */}
+                {/* Logo、操作按鈕和定價 */}
                 <div className="flex items-start justify-between mb-4">
                     <div className="w-14 h-14 rounded-xl bg-foreground/5 flex items-center justify-center overflow-hidden shrink-0">
                         <Image
@@ -52,9 +54,16 @@ export function ToolCard({ tool }: ToolCardProps) {
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <span className={`px-3 py-1 rounded-lg text-xs font-medium ${getPricingColor(tool.pricing)}`}>
-                        {getPricingLabel(tool.pricing)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                        {/* 收藏按鈕 */}
+                        <FavoriteButton toolId={tool.id} variant="icon" />
+                        {/* 比較按鈕 */}
+                        <CompareButton tool={tool} variant="icon" />
+                        {/* 定價標籤 */}
+                        <span className={`px-3 py-1 rounded-lg text-xs font-medium ${getPricingColor(tool.pricing)}`}>
+                            {getPricingLabel(tool.pricing)}
+                        </span>
+                    </div>
                 </div>
 
                 {/* 標題和分類 */}

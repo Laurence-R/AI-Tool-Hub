@@ -6,3 +6,5 @@
 export { ToolCard } from './ToolCard';
 export { ToolsFilter } from './ToolsFilter';
 export { ToolsSearch } from './ToolsSearch';
+export { CompareButton } from './CompareButton';
+export { FavoriteButton } from './FavoriteButton';

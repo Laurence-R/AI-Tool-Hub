@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared";
 import { Navigation } from "@/components/layout";
+import { CompareProvider, FavoritesProvider } from "@/contexts";
 
 export const metadata: Metadata = {
   title: "AI Tool Hub - 打造你的 AI 工具工作流",
@@ -27,8 +28,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
-          {children}
+          <CompareProvider>
+            <FavoritesProvider>
+              <Navigation />
+              {children}
+            </FavoritesProvider>
+          </CompareProvider>
         </ThemeProvider>
       </body>
     </html>
