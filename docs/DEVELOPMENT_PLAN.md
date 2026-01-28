@@ -148,11 +148,40 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
   - [x] `/api/reviews/like` - 切換按讚
   - [x] `/api/reviews/user` - 使用者評論歷史
 
-#### 3.2 工具提交
-- [ ] 工具提交表單
-- [ ] 管理員審核介面
-- [ ] 提交狀態追蹤
-- [ ] 提交指南頁面
+#### 3.2 工具提交 ✅
+- [x] 工具提交表單 (/submit)
+  - [x] 基本資訊 (名稱、描述、網址、Logo)
+  - [x] 分類與定價選擇
+  - [x] 特色功能列表 (最多 10 項)
+  - [x] 標籤 (最多 5 個)
+  - [x] 表單驗證與 Logo URL 檢查
+- [x] 管理員審核介面 (/admin/submissions)
+  - [x] 待審核/已通過/已拒絕分頁
+  - [x] 審核通過 → 自動建立 Tool 記錄
+  - [x] 審核拒絕 → 附帶拒絕原因
+  - [x] 詳情對話框
+- [x] 提交狀態追蹤
+  - [x] 用戶 Dashboard 查看提交記錄
+  - [x] 審核結果站內通知
+  - [x] Email 通知 (模擬)
+- [x] 提交指南頁面 (/submit/guide)
+- [x] 管理員角色系統 (UserRole: USER/ADMIN)
+- [x] 管理員導航入口 (Shield icon)
+- [x] API 端點
+  - [x] `/api/submissions` - GET/POST 用戶提交
+  - [x] `/api/admin/submissions` - GET 管理員列表
+  - [x] `/api/admin/submissions/[id]` - GET/PATCH 審核
+  - [x] `/api/tools` - GET 整合靜態+數據庫工具
+  - [x] `/api/user/role` - GET 用戶角色
+  - [x] `/api/notifications` - GET/PATCH 通知
+  - [x] `/api/dev/set-admin` - POST 開發用設定管理員
+- [x] 新增元件
+  - [x] SafeImage - 圖片錯誤處理
+  - [x] NotificationBell - 通知鈴鐺
+  - [x] Tabs, Popover, ScrollArea (shadcn/ui)
+- [x] 新增 Hooks
+  - [x] useTools - 獲取工具列表
+  - [x] useUserRole - 獲取用戶角色
 
 #### 3.3 工具合集
 - [ ] 建立個人合集
@@ -194,7 +223,7 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 | Phase 1 完成 | 2026-01-28 | ✅ 完成 |
 | Phase 2 完成 | 2026-01-29 | ✅ 完成 |
 | Phase 3.1 評論系統 | 2026-01-29 | ✅ 完成 |
-| Phase 3.2 工具提交 | 2026-02-05 | 📋 計畫中 |
+| Phase 3.2 工具提交 | 2026-01-29 | ✅ 完成 |
 | Phase 3.3 工具合集 | 2026-02-15 | 📋 計畫中 |
 | Phase 4 完成 | 2026-03-01 | 📋 計畫中 |
 
