@@ -1,6 +1,6 @@
 # AI Tool Hub 開發計畫
 
-> 最後更新：2025-01-28
+> 最後更新：2026-01-29
 
 ## 專案概述
 
@@ -14,6 +14,8 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 - **元件庫**: shadcn/ui
 - **字體**: Space Grotesk (標題) + DM Sans (內文)
 - **主色調**: #60A5FA (藍色), #818CF8 (紫色)
+- **資料庫**: SQLite + Prisma 7.3.0
+- **認證**: NextAuth.js v5 (JWT)
 
 ---
 
@@ -85,32 +87,47 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 
 ---
 
-### 📋 Phase 2: 使用者系統
+### ✅ Phase 2: 使用者系統 (已完成)
 
 目標：建立完整的使用者認證與個人化功能
 
-#### 2.1 認證系統
-- [ ] NextAuth.js 整合
-- [ ] Email/密碼登入
-- [ ] Google OAuth
-- [ ] GitHub OAuth
-- [ ] 密碼重設流程
+#### 2.1 認證系統 ✅
+- [x] NextAuth.js v5 整合 (JWT session)
+- [x] Email/密碼登入
+- [x] 使用者註冊 API
+- [x] Google OAuth (已配置)
+- [x] GitHub OAuth (已配置)
+- [x] 密碼修改功能
 
-#### 2.2 使用者儀表板
-- [ ] 個人資料頁面
-- [ ] 收藏工具管理
-- [ ] 評論歷史
-- [ ] 帳號設定
+#### 2.2 使用者儀表板 ✅
+- [x] 個人資料頁面 (可編輯名稱，即時同步)
+- [x] 收藏工具管理 (顯示/刪除)
+- [x] 活動統計 (收藏數、評論數、收藏集數)
+- [x] 帳號設定
+  - [x] 安全性設定 (修改密碼)
+  - [x] 通知設定 (Email/工具更新/每週精選)
+  - [x] 外觀設定 (淺色/深色/系統主題)
+  - [x] 危險區域 (登出/刪除帳號)
 
-#### 2.3 資料庫整合
-- [ ] Prisma ORM 設定
-- [ ] PostgreSQL / PlanetScale
-- [ ] 資料模型設計
-  - [ ] User
-  - [ ] Tool
-  - [ ] Review
-  - [ ] Favorite
-  - [ ] Collection
+#### 2.3 資料庫整合 ✅
+- [x] Prisma 7.3.0 + LibSQL adapter
+- [x] SQLite 本地資料庫
+- [x] 資料模型設計
+  - [x] User (使用者)
+  - [x] Account (OAuth 帳號)
+  - [x] Session (登入 session)
+  - [x] Favorite (收藏)
+  - [x] Review (評論)
+  - [x] Collection / CollectionItem (收藏集)
+
+#### 2.4 API 端點 ✅
+- [x] `/api/auth/register` - 使用者註冊
+- [x] `/api/auth/[...nextauth]` - NextAuth 認證
+- [x] `/api/user/profile` - 更新個人資料
+- [x] `/api/user/password` - 修改密碼
+- [x] `/api/user/delete` - 刪除帳號
+- [x] `/api/favorites` - 收藏 CRUD
+- [x] `/api/favorites/sync` - 同步 localStorage
 
 ---
 
@@ -168,10 +185,10 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 | 里程碑 | 預計完成 | 狀態 |
 |--------|----------|------|
 | Phase 0 完成 | 2026-01-28 | ✅ 完成 |
-| Phase 1 完成 | 2026-02-10 | 🚧 進行中 |
-| Phase 2 完成 | 2026-03-01 | 📋 計畫中 |
-| Phase 3 完成 | 2026-03-20 | 📋 計畫中 |
-| Phase 4 完成 | 2026-04-15 | 📋 計畫中 |
+| Phase 1 完成 | 2026-01-28 | ✅ 完成 |
+| Phase 2 完成 | 2026-01-29 | ✅ 完成 |
+| Phase 3 完成 | 2026-02-15 | 📋 計畫中 |
+| Phase 4 完成 | 2026-03-01 | 📋 計畫中 |
 
 ---
 

@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart } from "lucide-react"
+import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart, Loader2 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
+import { useSession, signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -26,14 +27,21 @@ import { useCompare, useFavorites } from "@/contexts"
 
 export function Navigation() {
     const { theme, setTheme } = useTheme()
+    const { data: session, status } = useSession()
     const [mounted, setMounted] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
-    const [isLoggedIn] = useState(false) // 模擬登入狀態
     
     // 比較和收藏狀態
     const { compareCount } = useCompare()
     const { favoritesCount } = useFavorites()
+
+    const isLoggedIn = status === "authenticated"
+    const isLoading = status === "loading"
+
+    const handleSignOut = async () => {
+        await signOut({ callbackUrl: "/" })
+    }
 
     useEffect(() => {
         setMounted(true)
@@ -150,7 +158,16 @@ export function Navigation() {
                                 )}
 
                                 {/* User Menu - Desktop */}
-                                {isLoggedIn ? (
+                                {isLoading ? (
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="hidden md:flex"
+                                        disabled
+                                    >
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                    </Button>
+                                ) : isLoggedIn ? (
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button
@@ -158,26 +175,44 @@ export function Navigation() {
                                                 size="icon"
                                                 className="hidden md:flex text-foreground hover:text-primary"
                                             >
-                                                <User className="w-5 h-5" />
+                                                {session?.user?.image ? (
+                                                    <img
+                                                        src={session.user.image}
+                                                        alt={session.user.name || "User"}
+                                                        className="w-7 h-7 rounded-full"
+                                                    />
+                                                ) : (
+                                                    <User className="w-5 h-5" />
+                                                )}
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur-xl border-border/50">
-                                            <DropdownMenuLabel>我的帳號</DropdownMenuLabel>
+                                            <DropdownMenuLabel>
+                                                <div className="flex flex-col">
+                                                    <span>{session?.user?.name || "使用者"}</span>
+                                                    <span className="text-xs text-muted-foreground font-normal">
+                                                        {session?.user?.email}
+                                                    </span>
+                                                </div>
+                                            </DropdownMenuLabel>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem asChild>
-                                                <Link href="/profile" className="cursor-pointer">
+                                                <Link href="/dashboard" className="cursor-pointer">
                                                     <UserCircle className="w-4 h-4 mr-2" />
-                                                    個人資料
+                                                    個人中心
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild>
-                                                <Link href="/settings" className="cursor-pointer">
+                                                <Link href="/dashboard" className="cursor-pointer">
                                                     <Settings className="w-4 h-4 mr-2" />
                                                     設定
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">
+                                            <DropdownMenuItem 
+                                                className="cursor-pointer text-destructive focus:text-destructive"
+                                                onClick={handleSignOut}
+                                            >
                                                 <LogOut className="w-4 h-4 mr-2" />
                                                 登出
                                             </DropdownMenuItem>
@@ -226,16 +261,33 @@ export function Navigation() {
                                             <div className="pt-4 border-t border-border/50">
                                                 {isLoggedIn ? (
                                                     <>
+                                                        <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-border/30">
+                                                            {session?.user?.image ? (
+                                                                <img
+                                                                    src={session.user.image}
+                                                                    alt={session.user.name || "User"}
+                                                                    className="w-10 h-10 rounded-full"
+                                                                />
+                                                            ) : (
+                                                                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                                                    <User className="w-5 h-5 text-primary" />
+                                                                </div>
+                                                            )}
+                                                            <div>
+                                                                <p className="font-medium">{session?.user?.name || "使用者"}</p>
+                                                                <p className="text-xs text-muted-foreground">{session?.user?.email}</p>
+                                                            </div>
+                                                        </div>
                                                         <Link
-                                                            href="/profile"
+                                                            href="/dashboard"
                                                             className="flex items-center space-x-2 text-foreground hover:text-primary transition-colors duration-200 font-body font-medium text-lg mb-4"
                                                             onClick={() => setMobileMenuOpen(false)}
                                                         >
                                                             <UserCircle className="w-5 h-5" />
-                                                            <span>個人資料</span>
+                                                            <span>個人中心</span>
                                                         </Link>
                                                         <Link
-                                                            href="/settings"
+                                                            href="/dashboard"
                                                             className="flex items-center space-x-2 text-foreground hover:text-primary transition-colors duration-200 font-body font-medium text-lg mb-4"
                                                             onClick={() => setMobileMenuOpen(false)}
                                                         >
@@ -244,7 +296,10 @@ export function Navigation() {
                                                         </Link>
                                                         <button
                                                             className="flex items-center space-x-2 text-destructive hover:text-destructive/80 transition-colors duration-200 font-body font-medium text-lg w-full"
-                                                            onClick={() => setMobileMenuOpen(false)}
+                                                            onClick={() => {
+                                                                setMobileMenuOpen(false)
+                                                                handleSignOut()
+                                                            }}
                                                         >
                                                             <LogOut className="w-5 h-5" />
                                                             <span>登出</span>

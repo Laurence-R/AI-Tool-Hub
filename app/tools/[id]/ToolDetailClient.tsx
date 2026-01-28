@@ -14,10 +14,12 @@ import {
     Shield,
     TrendingUp,
     Users,
-    Sparkles
+    Sparkles,
+    Heart
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { useFavorites } from "@/contexts"
 import type { Tool, ToolBase, ToolReview } from "@/types"
 
 interface ToolDetailClientProps {
@@ -28,6 +30,18 @@ interface ToolDetailClientProps {
 
 export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClientProps) {
     const [activeTab, setActiveTab] = useState<"overview" | "pricing" | "reviews">("overview")
+    const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites()
+    
+    const toolIdStr = String(tool.id)
+    const isFav = isFavorite(toolIdStr)
+
+    const handleToggleFavorite = () => {
+        if (isFav) {
+            removeFromFavorites(toolIdStr)
+        } else {
+            addToFavorites(toolIdStr)
+        }
+    }
 
     const getPricingLabel = (pricing: string) => {
         const labels = { free: "免費", freemium: "免費增值", paid: "付費" }
@@ -143,11 +157,14 @@ export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClie
                                 </Button>
                                 <Button
                                     variant="outline"
-                                    className="w-full h-12 text-base font-semibold"
+                                    className={`w-full h-12 text-base font-semibold ${
+                                        isFav ? "bg-primary/10 border-primary text-primary" : ""
+                                    }`}
                                     size="lg"
+                                    onClick={handleToggleFavorite}
                                 >
-                                    <Sparkles className="w-5 h-5 mr-2" />
-                                    加入收藏
+                                    <Heart className={`w-5 h-5 mr-2 ${isFav ? "fill-primary" : ""}`} />
+                                    {isFav ? "已收藏" : "加入收藏"}
                                 </Button>
                             </div>
                         </div>

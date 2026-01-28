@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared";
 import { Navigation } from "@/components/layout";
+import { AuthProvider } from "@/components/providers";
 import { CompareProvider, FavoritesProvider, SearchProvider } from "@/contexts";
 import { defaultMetadata } from "@/lib/seo";
 
@@ -29,21 +30,23 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SearchProvider>
-            <CompareProvider>
-              <FavoritesProvider>
-                <Navigation />
-                {children}
-              </FavoritesProvider>
-            </CompareProvider>
-          </SearchProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SearchProvider>
+              <CompareProvider>
+                <FavoritesProvider>
+                  <Navigation />
+                  {children}
+                </FavoritesProvider>
+              </CompareProvider>
+            </SearchProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

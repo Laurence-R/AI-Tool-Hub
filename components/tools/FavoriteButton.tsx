@@ -5,7 +5,7 @@ import { useFavorites } from "@/contexts"
 import { cn } from "@/lib/utils"
 
 interface FavoriteButtonProps {
-  toolId: number
+  toolId: number | string
   variant?: "default" | "icon"
   className?: string
 }
@@ -13,12 +13,14 @@ interface FavoriteButtonProps {
 export function FavoriteButton({ toolId, variant = "icon", className }: FavoriteButtonProps) {
   const { toggleFavorite, isFavorite } = useFavorites()
   
-  const favorited = isFavorite(toolId)
+  // 將 toolId 轉換為字串
+  const toolIdStr = String(toolId)
+  const favorited = isFavorite(toolIdStr)
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    toggleFavorite(toolId)
+    toggleFavorite(toolIdStr)
   }
 
   // 圖示模式

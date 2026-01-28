@@ -16,7 +16,7 @@ export function FavoritesPageClient() {
   // 獲取收藏的工具資料
   useEffect(() => {
     const favTools = favorites
-      .map(id => getToolById(id))
+      .map(id => getToolById(Number(id)))
       .filter((t): t is Tool => t !== undefined)
     setTools(favTools)
   }, [favorites])
