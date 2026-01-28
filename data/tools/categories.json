@@ -1,0 +1,17 @@
+[
+  { "id": "all", "name": "全部分類", "icon": "Grid3X3" },
+  { "id": "對話 AI", "name": "對話 AI", "icon": "MessageSquare" },
+  { "id": "圖像生成", "name": "圖像生成", "icon": "Image" },
+  { "id": "視頻生成", "name": "視頻生成", "icon": "Video" },
+  { "id": "語音合成", "name": "語音合成", "icon": "Mic" },
+  { "id": "生產力", "name": "生產力", "icon": "Zap" },
+  { "id": "開發工具", "name": "開發工具", "icon": "Code" },
+  { "id": "內容創作", "name": "內容創作", "icon": "PenTool" },
+  { "id": "設計工具", "name": "設計工具", "icon": "Palette" },
+  { "id": "寫作助手", "name": "寫作助手", "icon": "FileText" },
+  { "id": "音視頻編輯", "name": "音視頻編輯", "icon": "Film" },
+  { "id": "會議工具", "name": "會議工具", "icon": "Users" },
+  { "id": "自動化", "name": "自動化", "icon": "Workflow" },
+  { "id": "開發平台", "name": "開發平台", "icon": "Server" },
+  { "id": "搜尋引擎", "name": "搜尋引擎", "icon": "Search" }
+]

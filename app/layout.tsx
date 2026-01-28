@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Navigation } from "@/components/Navigation";
+import { ThemeProvider } from "@/components/shared";
+import { Navigation } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "AI Tool Hub - 打造你的 AI 工具工作流",

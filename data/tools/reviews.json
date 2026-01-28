@@ -1,0 +1,145 @@
+[
+  {
+    "id": 1,
+    "toolId": 1,
+    "userName": "Alex Chen",
+    "userAvatar": "/avatars/user1.jpg",
+    "rating": 5,
+    "date": "2025-12-20",
+    "content": "ChatGPT 徹底改變了我的工作流程！作為開發者，它幫我快速解決問題、生成代碼片段，甚至協助撰寫技術文件。強烈推薦！",
+    "helpful": 124,
+    "verified": true
+  },
+  {
+    "id": 2,
+    "toolId": 1,
+    "userName": "Sarah Lin",
+    "userAvatar": "/avatars/user2.jpg",
+    "rating": 4,
+    "date": "2025-12-15",
+    "content": "非常實用的 AI 工具，對內容創作和翻譯幫助很大。唯一小缺點是高峰時段回應速度較慢，但整體來說物超所值。",
+    "helpful": 89,
+    "verified": false
+  },
+  {
+    "id": 3,
+    "toolId": 1,
+    "userName": "Mike Wong",
+    "userAvatar": "/avatars/user3.jpg",
+    "rating": 5,
+    "date": "2025-12-10",
+    "content": "GPT-4 的能力真的很驚人，能夠理解複雜的問題並提供深入的分析。用於學習和研究非常有幫助。",
+    "helpful": 67,
+    "verified": true
+  },
+  {
+    "id": 4,
+    "toolId": 2,
+    "userName": "Emily Huang",
+    "userAvatar": "/avatars/user4.jpg",
+    "rating": 5,
+    "date": "2025-12-18",
+    "content": "Midjourney 的藝術風格真的令人驚艷！我用它來創作品牌視覺和社群媒體圖片，客戶都非常滿意。",
+    "helpful": 156,
+    "verified": true
+  },
+  {
+    "id": 5,
+    "toolId": 2,
+    "userName": "David Lee",
+    "userAvatar": "/avatars/user5.jpg",
+    "rating": 4,
+    "date": "2025-12-12",
+    "content": "圖像品質一流，但需要花時間學習 prompt 技巧。Discord 介面對新手來說可能有點複雜。",
+    "helpful": 78,
+    "verified": false
+  },
+  {
+    "id": 6,
+    "toolId": 3,
+    "userName": "Jennifer Wu",
+    "userAvatar": "/avatars/user6.jpg",
+    "rating": 5,
+    "date": "2025-12-16",
+    "content": "Claude 的長文本處理能力太強了！我用它來分析研究論文和合約文件，省下大量時間。",
+    "helpful": 92,
+    "verified": true
+  },
+  {
+    "id": 7,
+    "toolId": 3,
+    "userName": "Kevin Chang",
+    "userAvatar": "/avatars/user7.jpg",
+    "rating": 4,
+    "date": "2025-12-08",
+    "content": "很可靠的 AI 助手，回答比較保守但準確度高。適合需要高品質輸出的專業場景。",
+    "helpful": 45,
+    "verified": true
+  },
+  {
+    "id": 8,
+    "toolId": 5,
+    "userName": "Tom Liu",
+    "userAvatar": "/avatars/user8.jpg",
+    "rating": 5,
+    "date": "2025-12-19",
+    "content": "Copilot 讓我的編程效率提升了至少 30%！代碼建議非常準確，尤其是處理重複性工作時。",
+    "helpful": 203,
+    "verified": true
+  },
+  {
+    "id": 9,
+    "toolId": 5,
+    "userName": "Amy Chen",
+    "userAvatar": "/avatars/user9.jpg",
+    "rating": 4,
+    "date": "2025-12-14",
+    "content": "對 Python 和 JavaScript 的支援非常好，偶爾會有不相關的建議，但整體來說很值得使用。",
+    "helpful": 67,
+    "verified": false
+  },
+  {
+    "id": 10,
+    "toolId": 7,
+    "userName": "Lisa Wang",
+    "userAvatar": "/avatars/user10.jpg",
+    "rating": 5,
+    "date": "2025-12-17",
+    "content": "Perplexity 是我做研究的首選工具！有來源引用這點太重要了，讓我可以驗證資訊的可靠性。",
+    "helpful": 134,
+    "verified": true
+  },
+  {
+    "id": 11,
+    "toolId": 8,
+    "userName": "Ryan Tsai",
+    "userAvatar": "/avatars/user11.jpg",
+    "rating": 5,
+    "date": "2025-12-13",
+    "content": "ElevenLabs 的語音品質太逼真了！我用來做 YouTube 旁白，觀眾都以為是真人配音。",
+    "helpful": 189,
+    "verified": true
+  },
+  {
+    "id": 12,
+    "toolId": 15,
+    "userName": "Jack Huang",
+    "userAvatar": "/avatars/user12.jpg",
+    "rating": 5,
+    "date": "2025-12-11",
+    "content": "Cursor 完全改變了我寫程式的方式！用自然語言就能生成代碼，比 Copilot 更加強大。",
+    "helpful": 245,
+    "verified": true
+  },
+  {
+    "id": 13,
+    "toolId": 15,
+    "userName": "Michelle Hsu",
+    "userAvatar": "/avatars/user13.jpg",
+    "rating": 4,
+    "date": "2025-12-09",
+    "content": "從 VS Code 轉過來幾乎沒有學習成本，AI 功能非常實用。希望未來能支援更多語言。",
+    "helpful": 78,
+    "verified": false
+  }
+]

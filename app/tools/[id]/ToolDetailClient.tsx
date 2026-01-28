@@ -18,49 +18,12 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-
-interface Tool {
-    id: number
-    name: string
-    description: string
-    fullDescription?: string
-    category: string
-    pricing: string
-    rating: number
-    reviewCount: number
-    logo: string
-    tags: string[]
-    url: string
-    features?: string[]
-    pricingPlans?: PricingPlan[]
-    screenshots?: string[]
-    relatedTools?: number[]
-}
-
-interface PricingPlan {
-    name: string
-    price: string
-    period: string
-    features: string[]
-    recommended?: boolean
-}
-
-interface Review {
-    id: number
-    toolId: number
-    userName: string
-    userAvatar: string
-    rating: number
-    date: string
-    content: string
-    helpful: number
-    verified: boolean
-}
+import type { Tool, ToolBase, ToolReview } from "@/types"
 
 interface ToolDetailClientProps {
     tool: Tool
-    reviews: Review[]
-    relatedTools: Tool[]
+    reviews: ToolReview[]
+    relatedTools: ToolBase[]
 }
 
 export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClientProps) {

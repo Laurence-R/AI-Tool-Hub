@@ -1,11 +1,12 @@
-import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
-import { PopularTools } from "@/components/PopularTools";
-import { HowItWorks } from "@/components/HowItWorks";
-import { Testimonials } from "@/components/Testimonials";
-import { FinalCTA } from "@/components/FinalCTA";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/layout";
+import { 
+  Hero, 
+  Features, 
+  PopularTools, 
+  HowItWorks, 
+  Testimonials, 
+  FinalCTA 
+} from "@/components/sections";
 
 export default function Home() {
   return (

@@ -1,0 +1,884 @@
+[
+  {
+    "id": 1,
+    "slug": "chatgpt",
+    "name": "ChatGPT",
+    "description": "OpenAI 開發的強大對話 AI，能夠進行自然對話、回答問題、協助寫作、編程等多種任務",
+    "fullDescription": "ChatGPT 是 OpenAI 推出的革命性對話式 AI 模型，基於 GPT-4 架構。它能夠理解和生成自然語言，在多個領域提供專業級的協助，包括內容創作、程式開發、數據分析、語言翻譯等。ChatGPT 透過大規模語言訓練，能夠進行複雜的推理、創意寫作，並提供有價值的見解。",
+    "category": "對話 AI",
+    "pricing": "freemium",
+    "rating": 4.8,
+    "reviewCount": 12584,
+    "logo": "/tools/chatgpt.png",
+    "tags": ["對話", "寫作", "編程", "研究", "AI助手", "內容生成", "OpenAI"],
+    "url": "https://chat.openai.com",
+    "features": [
+      "自然語言對話",
+      "多領域知識問答",
+      "程式碼生成與除錯",
+      "內容創作與編輯",
+      "語言翻譯",
+      "數據分析與解釋"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["基本 GPT-3.5 模型", "標準回應速度", "無限對話", "基礎功能"],
+        "recommended": false
+      },
+      {
+        "name": "Plus",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["GPT-4 完整存取", "優先回應速度", "進階功能", "插件生態系統", "DALL-E 圖像生成"],
+        "recommended": true
+      },
+      {
+        "name": "Team",
+        "price": "NT$ 750",
+        "period": "每人/每月",
+        "features": ["所有 Plus 功能", "團隊協作空間", "管理控制台", "進階數據分析"],
+        "recommended": false
+      }
+    ],
+    "screenshots": [
+      "/tools/screenshots/chatgpt-1.jpg",
+      "/tools/screenshots/chatgpt-2.jpg",
+      "/tools/screenshots/chatgpt-3.jpg"
+    ],
+    "relatedToolIds": [3, 4, 7],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-12-01"
+  },
+  {
+    "id": 2,
+    "slug": "midjourney",
+    "name": "Midjourney",
+    "description": "領先的 AI 圖像生成工具，能創造出令人驚嘆的藝術作品和視覺內容",
+    "fullDescription": "Midjourney 是目前市場上最受歡迎的 AI 圖像生成平台之一，以其卓越的藝術質感和創意表現聞名。用戶只需提供文字描述（prompt），Midjourney 就能生成高質量、富有創意的圖像。無論是插畫、概念藝術、產品設計還是品牌視覺，Midjourney 都能提供專業級的視覺創作支援。",
+    "category": "圖像生成",
+    "pricing": "paid",
+    "rating": 4.9,
+    "reviewCount": 8923,
+    "logo": "/tools/midjourney.png",
+    "tags": ["圖像", "藝術", "設計", "創意", "AI繪圖"],
+    "url": "https://midjourney.com",
+    "features": [
+      "文字轉圖像生成",
+      "多種藝術風格",
+      "高解析度輸出",
+      "批次生成功能",
+      "社群畫廊",
+      "Discord 整合"
+    ],
+    "pricingPlans": [
+      {
+        "name": "Basic",
+        "price": "NT$ 300",
+        "period": "每月",
+        "features": ["200 張圖像/月", "標準生成速度", "基本商業授權"],
+        "recommended": false
+      },
+      {
+        "name": "Standard",
+        "price": "NT$ 900",
+        "period": "每月",
+        "features": ["無限圖像生成", "快速生成模式", "完整商業授權", "私密模式"],
+        "recommended": true
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 1800",
+        "period": "每月",
+        "features": ["所有 Standard 功能", "12 倍快速生成時數", "隱形模式", "優先支援"],
+        "recommended": false
+      }
+    ],
+    "screenshots": [
+      "/tools/screenshots/midjourney-1.jpg",
+      "/tools/screenshots/midjourney-2.jpg"
+    ],
+    "relatedToolIds": [10, 13],
+    "createdAt": "2024-01-15",
+    "updatedAt": "2025-11-20"
+  },
+  {
+    "id": 3,
+    "slug": "claude",
+    "name": "Claude",
+    "description": "Anthropic 開發的 AI 助手，擅長長文本分析、安全對話和複雜推理任務",
+    "fullDescription": "Claude 是 Anthropic 公司開發的先進 AI 助手，以其出色的安全性和可靠性著稱。Claude 具有超長的上下文理解能力（支援超過 100K tokens），特別適合處理長篇文檔分析、複雜推理任務和需要高度準確性的應用場景。",
+    "category": "對話 AI",
+    "pricing": "freemium",
+    "rating": 4.7,
+    "reviewCount": 6842,
+    "logo": "/tools/claude.png",
+    "tags": ["對話", "分析", "安全", "推理", "文檔處理"],
+    "url": "https://claude.ai",
+    "features": [
+      "100K+ token 上下文",
+      "安全可靠",
+      "文檔分析",
+      "程式碼協助",
+      "複雜推理",
+      "多語言支援"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["Claude 3 Sonnet", "每日使用限制", "基本功能"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["Claude 3 Opus 存取", "5 倍使用量", "優先回應", "進階功能"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [1, 4, 7],
+    "createdAt": "2024-02-01",
+    "updatedAt": "2025-12-15"
+  },
+  {
+    "id": 4,
+    "slug": "gemini",
+    "name": "Gemini",
+    "description": "Google 的多模態 AI 模型，支援文字、圖像、程式碼和即時搜尋功能",
+    "fullDescription": "Gemini 是 Google 推出的新一代多模態 AI 模型，整合了文字、圖像、音訊和程式碼處理能力。作為 Google 生態系統的一部分，Gemini 可以無縫連接 Google 服務，提供即時搜尋、Gmail 整合等強大功能。",
+    "category": "對話 AI",
+    "pricing": "freemium",
+    "rating": 4.6,
+    "reviewCount": 5231,
+    "logo": "/tools/gemini.png",
+    "tags": ["對話", "多模態", "搜尋", "整合", "Google"],
+    "url": "https://gemini.google.com",
+    "features": [
+      "整合 Google 服務",
+      "多模態輸入",
+      "即時資訊",
+      "程式碼協助",
+      "圖像理解",
+      "語音對話"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["Gemini Pro", "基本功能", "Google 整合"],
+        "recommended": false
+      },
+      {
+        "name": "Advanced",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["Gemini Ultra", "2TB 雲端空間", "優先存取新功能", "進階 Google One 功能"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [1, 3, 7],
+    "createdAt": "2024-03-01",
+    "updatedAt": "2025-12-10"
+  },
+  {
+    "id": 5,
+    "slug": "github-copilot",
+    "name": "GitHub Copilot",
+    "description": "AI 程式設計助手，提供智能代碼建議和自動補全，大幅提升開發效率",
+    "fullDescription": "GitHub Copilot 是由 GitHub 和 OpenAI 共同開發的 AI 程式設計助手，它能夠在您編寫代碼時提供智能建議和自動補全功能。Copilot 理解上下文，可以生成完整的函數、測試案例，甚至整個代碼區塊，大幅提升開發效率。",
+    "category": "開發工具",
+    "pricing": "paid",
+    "rating": 4.5,
+    "reviewCount": 9876,
+    "logo": "/tools/github-copilot.png",
+    "tags": ["編程", "開發", "自動化", "代碼", "GitHub"],
+    "url": "https://github.com/features/copilot",
+    "features": [
+      "代碼自動補全",
+      "多語言支援",
+      "註釋生成",
+      "測試撰寫",
+      "IDE 整合",
+      "聊天功能"
+    ],
+    "pricingPlans": [
+      {
+        "name": "Individual",
+        "price": "NT$ 300",
+        "period": "每月",
+        "features": ["代碼補全", "聊天功能", "CLI 支援", "IDE 整合"],
+        "recommended": false
+      },
+      {
+        "name": "Business",
+        "price": "NT$ 570",
+        "period": "每人/每月",
+        "features": ["所有 Individual 功能", "組織管理", "政策控制", "IP 賠償"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [15, 19, 20],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-11-01"
+  },
+  {
+    "id": 6,
+    "slug": "notion-ai",
+    "name": "Notion AI",
+    "description": "整合到 Notion 的 AI 助手，幫助你更高效地撰寫、總結和整理筆記",
+    "fullDescription": "Notion AI 是內建於 Notion 工作空間的 AI 助手，可以協助您撰寫、編輯、總結和整理內容。無論是生成會議紀錄、改寫文案還是腦力激盪，Notion AI 都能無縫融入您的工作流程。",
+    "category": "生產力",
+    "pricing": "freemium",
+    "rating": 4.6,
+    "reviewCount": 7234,
+    "logo": "/tools/notion.png",
+    "tags": ["筆記", "文檔", "協作", "整理", "生產力"],
+    "url": "https://notion.so",
+    "features": [
+      "智能摘要",
+      "自動翻譯",
+      "內容改寫",
+      "腦力激盪",
+      "行動項目提取",
+      "寫作協助"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["限量 AI 使用", "基本 Notion 功能"],
+        "recommended": false
+      },
+      {
+        "name": "Plus",
+        "price": "NT$ 300",
+        "period": "每月",
+        "features": ["無限 AI 使用", "無限區塊", "無限檔案上傳"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [11, 12, 14],
+    "createdAt": "2024-02-15",
+    "updatedAt": "2025-10-20"
+  },
+  {
+    "id": 7,
+    "slug": "perplexity-ai",
+    "name": "Perplexity AI",
+    "description": "AI 驅動的搜尋引擎，提供準確的答案和來源引用，讓研究更加高效",
+    "fullDescription": "Perplexity AI 是一個革命性的 AI 搜尋引擎，結合了大型語言模型和即時網路搜尋能力。它不僅能回答問題，還會提供詳細的來源引用，讓您可以驗證資訊的準確性。",
+    "category": "搜尋引擎",
+    "pricing": "freemium",
+    "rating": 4.7,
+    "reviewCount": 4532,
+    "logo": "/tools/perplexity-ai.png",
+    "tags": ["搜尋", "研究", "資訊", "引用", "問答"],
+    "url": "https://perplexity.ai",
+    "features": [
+      "即時搜尋",
+      "來源引用",
+      "追蹤問題",
+      "專業模式",
+      "檔案上傳",
+      "集合功能"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["基本搜尋", "每日使用限制", "標準模型"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["無限 Pro 搜尋", "GPT-4/Claude 存取", "檔案上傳", "API 存取"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [1, 3, 4],
+    "createdAt": "2024-03-10",
+    "updatedAt": "2025-12-05"
+  },
+  {
+    "id": 8,
+    "slug": "elevenlabs",
+    "name": "ElevenLabs",
+    "description": "頂級 AI 語音合成平台，生成逼真的語音和支援語音克隆功能",
+    "fullDescription": "ElevenLabs 是領先的 AI 語音合成平台，能夠生成極為逼真的人聲。它支援語音克隆功能，只需幾分鐘的音頻樣本就能創建您自己的聲音模型。適用於配音、有聲書、Podcast 等多種場景。",
+    "category": "語音合成",
+    "pricing": "freemium",
+    "rating": 4.8,
+    "reviewCount": 3421,
+    "logo": "/tools/elevenlabs.jpg",
+    "tags": ["語音", "配音", "合成", "克隆", "TTS"],
+    "url": "https://elevenlabs.io",
+    "features": [
+      "超逼真語音",
+      "多語言支援",
+      "語音克隆",
+      "情感調節",
+      "即時轉換",
+      "API 支援"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["10,000 字符/月", "預設聲音", "非商業使用"],
+        "recommended": false
+      },
+      {
+        "name": "Starter",
+        "price": "NT$ 150",
+        "period": "每月",
+        "features": ["30,000 字符/月", "語音克隆", "商業授權"],
+        "recommended": false
+      },
+      {
+        "name": "Creator",
+        "price": "NT$ 660",
+        "period": "每月",
+        "features": ["100,000 字符/月", "專業語音克隆", "優先佇列", "API 存取"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [9, 16],
+    "createdAt": "2024-04-01",
+    "updatedAt": "2025-11-15"
+  },
+  {
+    "id": 9,
+    "slug": "runway",
+    "name": "Runway",
+    "description": "專業級 AI 視頻編輯和生成工具，讓創作者輕鬆製作驚艷的視頻內容",
+    "fullDescription": "Runway 是一個專業的 AI 視頻創作平台，提供從文字到視頻、圖像到視頻等多種生成功能。它也包含強大的視頻編輯工具，如背景移除、動態追蹤、視頻超解析度等，是內容創作者的必備工具。",
+    "category": "視頻生成",
+    "pricing": "freemium",
+    "rating": 4.7,
+    "reviewCount": 5678,
+    "logo": "/tools/runway.png",
+    "tags": ["視頻", "編輯", "特效", "生成", "創作"],
+    "url": "https://runwayml.com",
+    "features": [
+      "文字轉視頻",
+      "圖像轉視頻",
+      "背景移除",
+      "動態追蹤",
+      "視頻超解析度",
+      "色彩校正"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["125 credits", "基本編輯工具", "720p 輸出"],
+        "recommended": false
+      },
+      {
+        "name": "Standard",
+        "price": "NT$ 360",
+        "period": "每月",
+        "features": ["625 credits/月", "所有生成工具", "4K 輸出", "無浮水印"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [8, 16],
+    "createdAt": "2024-02-20",
+    "updatedAt": "2025-12-01"
+  },
+  {
+    "id": 10,
+    "slug": "stable-diffusion",
+    "name": "Stable Diffusion",
+    "description": "開源的 AI 圖像生成模型，提供強大的自定義能力和靈活性",
+    "fullDescription": "Stable Diffusion 是由 Stability AI 開發的開源圖像生成模型，任何人都可以免費下載和使用。它提供了高度的可定製性，用戶可以訓練自己的模型、使用各種插件和擴展，在本地設備上運行。",
+    "category": "圖像生成",
+    "pricing": "free",
+    "rating": 4.5,
+    "reviewCount": 8765,
+    "logo": "/tools/stable-diffusion.png",
+    "tags": ["圖像", "開源", "自定義", "本地", "免費"],
+    "url": "https://stability.ai",
+    "features": [
+      "完全開源",
+      "本地部署",
+      "高度可控",
+      "社群插件",
+      "LoRA 訓練",
+      "多種介面"
+    ],
+    "pricingPlans": [
+      {
+        "name": "開源版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["完整模型存取", "本地運行", "無限生成", "商業使用"],
+        "recommended": true
+      },
+      {
+        "name": "DreamStudio",
+        "price": "NT$ 300",
+        "period": "1000 credits",
+        "features": ["雲端運行", "無需 GPU", "最新模型", "API 存取"],
+        "recommended": false
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [2, 13],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-10-01"
+  },
+  {
+    "id": 11,
+    "slug": "copy-ai",
+    "name": "Copy.ai",
+    "description": "AI 文案撰寫工具，快速生成行銷文案、社群媒體內容和部落格文章",
+    "fullDescription": "Copy.ai 是專為行銷人員和內容創作者設計的 AI 寫作工具。它提供數十種預設模板，可以快速生成社群媒體貼文、廣告文案、電子郵件、部落格文章等多種內容，大幅節省創作時間。",
+    "category": "內容創作",
+    "pricing": "freemium",
+    "rating": 4.4,
+    "reviewCount": 4321,
+    "logo": "/tools/copy.png",
+    "tags": ["文案", "行銷", "內容", "創作", "社群媒體"],
+    "url": "https://copy.ai",
+    "features": [
+      "多種模板",
+      "品牌語調",
+      "SEO 優化",
+      "批量生成",
+      "多語言支援",
+      "工作流自動化"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["2,000 字/月", "基本模板", "1 個使用者"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 1100",
+        "period": "每月",
+        "features": ["無限字數", "所有模板", "5 個使用者", "API 存取"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [6, 12, 14],
+    "createdAt": "2024-03-01",
+    "updatedAt": "2025-09-15"
+  },
+  {
+    "id": 12,
+    "slug": "jasper",
+    "name": "Jasper",
+    "description": "企業級 AI 寫作助手，專為行銷團隊和內容創作者設計",
+    "fullDescription": "Jasper 是企業級的 AI 內容創作平台，提供完整的品牌管理、團隊協作和工作流自動化功能。它能學習您的品牌風格，確保所有輸出內容保持一致的品牌調性。",
+    "category": "內容創作",
+    "pricing": "paid",
+    "rating": 4.5,
+    "reviewCount": 6543,
+    "logo": "/tools/jasper.jpg",
+    "tags": ["寫作", "行銷", "企業", "內容", "品牌"],
+    "url": "https://jasper.ai",
+    "features": [
+      "品牌風格",
+      "團隊協作",
+      "SEO 模式",
+      "多語言",
+      "Chrome 擴展",
+      "API 整合"
+    ],
+    "pricingPlans": [
+      {
+        "name": "Creator",
+        "price": "NT$ 1200",
+        "period": "每月",
+        "features": ["1 個使用者", "品牌聲音", "SEO 模式", "瀏覽器擴展"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 1800",
+        "period": "每月",
+        "features": ["所有 Creator 功能", "3 個使用者", "10 個品牌聲音", "進階分析"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [6, 11, 14],
+    "createdAt": "2024-01-15",
+    "updatedAt": "2025-11-01"
+  },
+  {
+    "id": 13,
+    "slug": "canva-ai",
+    "name": "Canva AI",
+    "description": "整合 AI 功能的設計平台，讓任何人都能創作專業級的視覺內容",
+    "fullDescription": "Canva 是全球最受歡迎的線上設計平台之一，現已整合多種 AI 功能，包括文字轉圖像、魔術編輯、背景移除等。無論您是否有設計經驗，都能輕鬆創作專業級的視覺內容。",
+    "category": "設計工具",
+    "pricing": "freemium",
+    "rating": 4.6,
+    "reviewCount": 15678,
+    "logo": "/tools/canva.png",
+    "tags": ["設計", "圖形", "簡報", "社群", "模板"],
+    "url": "https://canva.com",
+    "features": [
+      "AI 生成圖像",
+      "智能排版",
+      "背景移除",
+      "魔術橡皮擦",
+      "品牌套件",
+      "團隊協作"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["基本編輯功能", "數千模板", "5GB 儲存空間"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 375",
+        "period": "每月",
+        "features": ["所有 AI 功能", "品牌套件", "100GB 儲存", "背景移除"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [2, 10],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-12-01"
+  },
+  {
+    "id": 14,
+    "slug": "grammarly",
+    "name": "Grammarly",
+    "description": "AI 驅動的寫作助手，提供文法檢查、風格建議和語調優化",
+    "fullDescription": "Grammarly 是最受歡迎的 AI 寫作助手，能夠檢查文法、拼寫、標點符號錯誤，並提供風格和語調建議。它支援多種平台，可以在瀏覽器、桌面應用和行動裝置上使用。",
+    "category": "寫作助手",
+    "pricing": "freemium",
+    "rating": 4.5,
+    "reviewCount": 23456,
+    "logo": "/tools/grammaly.jpg",
+    "tags": ["寫作", "文法", "編輯", "校對", "英文"],
+    "url": "https://grammarly.com",
+    "features": [
+      "文法檢查",
+      "風格建議",
+      "抄襲檢測",
+      "語調分析",
+      "多平台支援",
+      "團隊功能"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["基本文法檢查", "拼寫檢查", "標點檢查"],
+        "recommended": false
+      },
+      {
+        "name": "Premium",
+        "price": "NT$ 360",
+        "period": "每月",
+        "features": ["進階文法檢查", "風格建議", "語調檢測", "抄襲檢測"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [6, 11, 12],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-10-15"
+  },
+  {
+    "id": 15,
+    "slug": "cursor",
+    "name": "Cursor",
+    "description": "AI 原生的程式碼編輯器，提供智能代碼建議和自然語言編程",
+    "fullDescription": "Cursor 是專為 AI 時代設計的程式碼編輯器，基於 VS Code 構建但深度整合了 AI 功能。您可以用自然語言描述需求，Cursor 會自動生成或修改代碼。它理解整個專案的上下文，提供更精準的建議。",
+    "category": "開發工具",
+    "pricing": "freemium",
+    "rating": 4.7,
+    "reviewCount": 4567,
+    "logo": "/tools/cursor.png",
+    "tags": ["編程", "IDE", "AI", "開發", "VS Code"],
+    "url": "https://cursor.sh",
+    "features": [
+      "自然語言編程",
+      "代碼預測",
+      "錯誤修復",
+      "重構建議",
+      "專案理解",
+      "VS Code 相容"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["2,000 次補全/月", "50 次慢速請求", "基本功能"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["無限補全", "500 次快速請求", "GPT-4/Claude 存取", "進階功能"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [5, 19, 20],
+    "createdAt": "2024-05-01",
+    "updatedAt": "2025-12-10"
+  },
+  {
+    "id": 16,
+    "slug": "descript",
+    "name": "Descript",
+    "description": "全方位音視頻編輯工具，支援文字轉錄、AI 語音和視頻剪輯",
+    "fullDescription": "Descript 是一個創新的音視頻編輯平台，您可以像編輯文字一樣編輯音頻和視頻。它提供自動轉錄功能，讓您可以通過編輯文字來剪輯多媒體內容，還支援 AI 語音克隆和多種後製功能。",
+    "category": "音視頻編輯",
+    "pricing": "freemium",
+    "rating": 4.6,
+    "reviewCount": 3456,
+    "logo": "/tools/descript.png",
+    "tags": ["視頻", "音頻", "編輯", "轉錄", "Podcast"],
+    "url": "https://descript.com",
+    "features": [
+      "自動轉錄",
+      "文字編輯視頻",
+      "AI 語音克隆",
+      "背景雜音去除",
+      "螢幕錄製",
+      "協作編輯"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["1 小時轉錄/月", "基本編輯", "720p 輸出"],
+        "recommended": false
+      },
+      {
+        "name": "Creator",
+        "price": "NT$ 360",
+        "period": "每月",
+        "features": ["10 小時轉錄/月", "AI 語音", "4K 輸出", "無浮水印"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [8, 9, 17],
+    "createdAt": "2024-02-01",
+    "updatedAt": "2025-11-20"
+  },
+  {
+    "id": 17,
+    "slug": "otter-ai",
+    "name": "Otter.ai",
+    "description": "AI 會議記錄工具，自動轉錄和總結會議內容，提高團隊效率",
+    "fullDescription": "Otter.ai 是專為會議和對話設計的 AI 轉錄工具。它可以即時轉錄會議內容、自動產生摘要、提取關鍵點和行動項目。支援與 Zoom、Google Meet、Microsoft Teams 等視訊會議平台整合。",
+    "category": "會議工具",
+    "pricing": "freemium",
+    "rating": 4.5,
+    "reviewCount": 5678,
+    "logo": "/tools/otter.png",
+    "tags": ["會議", "轉錄", "筆記", "協作", "Zoom"],
+    "url": "https://otter.ai",
+    "features": [
+      "即時轉錄",
+      "會議摘要",
+      "關鍵字提取",
+      "團隊共享",
+      "視訊整合",
+      "行動項目追蹤"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["300 分鐘/月", "即時轉錄", "摘要功能"],
+        "recommended": false
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 500",
+        "period": "每月",
+        "features": ["1,200 分鐘/月", "進階搜尋", "自訂詞彙", "匯出功能"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [6, 16, 18],
+    "createdAt": "2024-01-15",
+    "updatedAt": "2025-10-01"
+  },
+  {
+    "id": 18,
+    "slug": "zapier-ai",
+    "name": "Zapier AI",
+    "description": "自動化工作流程平台，使用 AI 連接各種應用程式和服務",
+    "fullDescription": "Zapier 是領先的無程式碼自動化平台，現已整合 AI 功能。您可以使用自然語言描述想要的自動化流程，Zapier 會自動建立。它支援數千種應用程式的整合，讓您輕鬆自動化重複性工作。",
+    "category": "自動化",
+    "pricing": "freemium",
+    "rating": 4.4,
+    "reviewCount": 8901,
+    "logo": "/tools/zapier.png",
+    "tags": ["自動化", "整合", "工作流", "連接", "無程式碼"],
+    "url": "https://zapier.com",
+    "features": [
+      "數千種整合",
+      "AI 自動化",
+      "無程式碼",
+      "條件邏輯",
+      "自然語言建立",
+      "多步驟流程"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["100 任務/月", "5 個 Zaps", "單步驟 Zaps"],
+        "recommended": false
+      },
+      {
+        "name": "Starter",
+        "price": "NT$ 600",
+        "period": "每月",
+        "features": ["750 任務/月", "20 個 Zaps", "多步驟 Zaps", "過濾器"],
+        "recommended": false
+      },
+      {
+        "name": "Professional",
+        "price": "NT$ 1500",
+        "period": "每月",
+        "features": ["2,000 任務/月", "無限 Zaps", "自動重試", "優先支援"],
+        "recommended": true
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [6, 17],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-09-01"
+  },
+  {
+    "id": 19,
+    "slug": "replicate",
+    "name": "Replicate",
+    "description": "開源 AI 模型平台，讓開發者輕鬆部署和使用各種 AI 模型",
+    "fullDescription": "Replicate 是一個 AI 模型平台，提供數千個預訓練的開源模型，包括圖像生成、語言模型、語音合成等。開發者可以通過簡單的 API 調用來使用這些模型，按使用量付費，無需管理基礎設施。",
+    "category": "開發平台",
+    "pricing": "paid",
+    "rating": 4.6,
+    "reviewCount": 2345,
+    "logo": "/tools/replicate.png",
+    "tags": ["API", "模型", "開發", "部署", "開源"],
+    "url": "https://replicate.com",
+    "features": [
+      "模型市集",
+      "簡易 API",
+      "按使用付費",
+      "雲端運算",
+      "自訂模型部署",
+      "版本控制"
+    ],
+    "pricingPlans": [
+      {
+        "name": "按使用付費",
+        "price": "依用量",
+        "period": "每次執行",
+        "features": ["所有公開模型", "API 存取", "無最低消費"],
+        "recommended": true
+      },
+      {
+        "name": "企業版",
+        "price": "客製報價",
+        "period": "年約",
+        "features": ["專屬運算資源", "SLA 保證", "優先支援", "私有部署"],
+        "recommended": false
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [5, 15, 20],
+    "createdAt": "2024-03-01",
+    "updatedAt": "2025-11-01"
+  },
+  {
+    "id": 20,
+    "slug": "huggingface",
+    "name": "HuggingFace",
+    "description": "開放的 AI 社群和平台，提供數萬個預訓練模型和資料集",
+    "fullDescription": "HuggingFace 是 AI 領域最大的開源社群和平台，提供超過 50 萬個預訓練模型和數萬個資料集。開發者可以免費使用、分享和部署 AI 模型，也可以使用 Spaces 功能免費託管自己的 AI 應用。",
+    "category": "開發平台",
+    "pricing": "freemium",
+    "rating": 4.7,
+    "reviewCount": 12345,
+    "logo": "/tools/huggingface.png",
+    "tags": ["開源", "模型", "社群", "機器學習", "資料集"],
+    "url": "https://huggingface.co",
+    "features": [
+      "模型庫",
+      "資料集",
+      "Spaces 應用",
+      "免費託管",
+      "Transformers 庫",
+      "推論 API"
+    ],
+    "pricingPlans": [
+      {
+        "name": "免費版",
+        "price": "NT$ 0",
+        "period": "永久免費",
+        "features": ["公開模型存取", "免費 Spaces", "社群支援", "基本推論"],
+        "recommended": true
+      },
+      {
+        "name": "Pro",
+        "price": "NT$ 270",
+        "period": "每月",
+        "features": ["私有模型", "進階 Spaces", "ZeroGPU", "優先推論"],
+        "recommended": false
+      },
+      {
+        "name": "Enterprise",
+        "price": "NT$ 600",
+        "period": "每月起",
+        "features": ["專屬運算", "SSO 整合", "SLA 保證", "技術支援"],
+        "recommended": false
+      }
+    ],
+    "screenshots": [],
+    "relatedToolIds": [5, 15, 19],
+    "createdAt": "2024-01-01",
+    "updatedAt": "2025-12-01"
+  }
+]

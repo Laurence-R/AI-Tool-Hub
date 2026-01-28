@@ -3,6 +3,17 @@
  */
 
 /**
+ * 篩選狀態
+ */
+export interface FilterState {
+    searchQuery: string
+    category: string
+    pricing: string
+    rating: string
+    sortBy: string
+}
+
+/**
  * 工具搜尋組件 Props
  */
 export interface ToolsSearchProps {

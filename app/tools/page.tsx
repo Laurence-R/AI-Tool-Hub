@@ -1,10 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { ToolsSearch } from "@/components/ToolsSearch"
-import { ToolsFilter } from "@/components/ToolsFilter"
-import { ToolCard } from "@/components/ToolCard"
-import { TOOLS_DATABASE } from "@/lib/toolsData"
+import { useState, useMemo } from "react"
+import { ToolsSearch, ToolsFilter, ToolCard } from "@/components/tools"
+import { getFilteredAndSortedTools } from "@/lib/tools"
 
 export default function ToolsPage() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -13,26 +11,18 @@ export default function ToolsPage() {
     const [selectedRating, setSelectedRating] = useState<string>("all")
     const [sortBy, setSortBy] = useState<string>("rating")
 
-    // 篩選邏輯
-    const filteredTools = TOOLS_DATABASE.filter(tool => {
-        const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            tool.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-
-        const matchesCategory = selectedCategory === "all" || tool.category === selectedCategory
-        const matchesPricing = selectedPricing === "all" || tool.pricing === selectedPricing
-        
-        let matchesRating = true
-        if (selectedRating === "4.5+") matchesRating = tool.rating >= 4.5
-        else if (selectedRating === "4.0+") matchesRating = tool.rating >= 4.0
-        else if (selectedRating === "3.5+") matchesRating = tool.rating >= 3.5
-
-        return matchesSearch && matchesCategory && matchesPricing && matchesRating
-    }).sort((a, b) => {
-        if (sortBy === "rating") return b.rating - a.rating
-        if (sortBy === "name") return a.name.localeCompare(b.name, 'zh-TW')
-        return 0
-    })
+    // 使用新的篩選函數
+    const filteredTools = useMemo(() => {
+        return getFilteredAndSortedTools({
+            searchQuery,
+            category: selectedCategory,
+            pricing: selectedPricing,
+            rating: selectedRating === "4.5+" ? "4.5" : 
+                    selectedRating === "4.0+" ? "4.0" : 
+                    selectedRating === "3.5+" ? "3.5" : "all",
+            sortBy,
+        })
+    }, [searchQuery, selectedCategory, selectedPricing, selectedRating, sortBy])
 
     return (
         <div className="min-h-screen bg-background pt-32 pb-20">
