@@ -11,6 +11,11 @@ datasource db {
 
 // ==================== 使用者系統 ====================
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -19,6 +24,7 @@ model User {
   password      String?   // 用於 credentials 認證
   image         String?
   bio           String?
+  role          UserRole  @default(USER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -28,6 +34,8 @@ model User {
   favorites     Favorite[]
   reviews       Review[]
   collections   Collection[]
+  submissions   ToolSubmission[]
+  notifications Notification[]
 }
 
 // NextAuth.js 帳號 (OAuth)
@@ -73,6 +81,74 @@ model VerificationToken {
 // 注意：工具資料主要存儲在靜態 JSON 中 (lib/tools.ts)
 // 這裡僅保留 Tool model 供未來擴展使用（例如動態新增工具）
 // 但收藏、評論等功能使用 toolId (Int) 直接對應靜態資料的 ID
+
+// 動態工具 (審核通過後新增)
+model Tool {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  url         String
+  logo        String?
+  category    String
+  pricing     String   // free, freemium, paid
+  features    String?  // JSON 字串
+  tags        String?  // JSON 字串
+  rating      Float    @default(0)
+  reviewCount Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 來源提交
+  submissionId String?       @unique
+  submission   ToolSubmission? @relation(fields: [submissionId], references: [id])
+}
+
+// ==================== 工具提交系統 ====================
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model ToolSubmission {
+  id            String           @id @default(cuid())
+  userId        String
+  name          String
+  description   String
+  url           String
+  logo          String?
+  category      String
+  pricing       String           // free, freemium, paid
+  features      String?          // JSON 字串
+  tags          String?          // JSON 字串
+  submitterNote String?          // 提交者備註
+  status        SubmissionStatus @default(PENDING)
+  reviewNote    String?          // 審核備註
+  reviewedAt    DateTime?
+  reviewedBy    String?          // 審核者 User ID
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool Tool?
+}
+
+// ==================== 通知系統 ====================
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // submission_approved, submission_rejected, etc.
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
 // ==================== 收藏系統 ====================
 

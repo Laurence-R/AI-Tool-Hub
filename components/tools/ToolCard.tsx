@@ -1,11 +1,11 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { Star, ExternalLink, Tag } from "lucide-react"
 import type { ToolCardProps } from "@/types"
 import { CompareButton } from "./CompareButton"
 import { FavoriteButton } from "./FavoriteButton"
+import { SafeImage } from "@/components/ui/safe-image"
 
 export function ToolCard({ tool }: ToolCardProps) {
     const getPricingLabel = (pricing: string) => {
@@ -46,12 +46,13 @@ export function ToolCard({ tool }: ToolCardProps) {
                 {/* Logo、操作按鈕和定價 */}
                 <div className="flex items-start justify-between mb-4">
                     <div className="w-14 h-14 rounded-xl bg-foreground/5 flex items-center justify-center overflow-hidden shrink-0">
-                        <Image
+                        <SafeImage
                             src={tool.logo}
                             alt={`${tool.name} logo`}
                             width={56}
                             height={56}
                             className="w-full h-full object-cover"
+                            fallbackClassName="rounded-xl"
                         />
                     </div>
                     <div className="flex items-center gap-2">

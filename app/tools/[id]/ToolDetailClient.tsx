@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import Link from "next/link"
+import { SafeImage } from "@/components/ui/safe-image"
 import { 
     Star, 
     ExternalLink, 
@@ -99,12 +99,13 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                 {/* Logo & 標題 */}
                                 <div className="flex items-start gap-6">
                                     <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl bg-foreground/5 flex items-center justify-center overflow-hidden shrink-0">
-                                        <Image
+                                        <SafeImage
                                             src={tool.logo}
                                             alt={`${tool.name} logo`}
                                             width={96}
                                             height={96}
                                             className="w-full h-full object-cover"
+                                            fallbackClassName="rounded-2xl"
                                         />
                                     </div>
                                     <div className="flex-1 space-y-3">
@@ -345,12 +346,13 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                             <div className="p-4 rounded-xl bg-foreground/5 hover:bg-foreground/10 transition-all duration-200 cursor-pointer space-y-3">
                                                 <div className="flex items-start gap-3">
                                                     <div className="w-12 h-12 rounded-lg bg-foreground/10 flex items-center justify-center overflow-hidden shrink-0">
-                                                        <Image
+                                                        <SafeImage
                                                             src={relatedTool.logo}
                                                             alt={relatedTool.name}
                                                             width={48}
                                                             height={48}
                                                             className="w-full h-full object-cover"
+                                                            fallbackClassName="rounded-lg"
                                                         />
                                                     </div>
                                                     <div className="flex-1 min-w-0">

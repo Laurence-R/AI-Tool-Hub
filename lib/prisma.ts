@@ -1,20 +1,22 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
-import path from 'path'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 function createPrismaClient() {
-  // 資料庫檔案在專案根目錄的 dev.db（由 Prisma CLI 建立）
-  const dbPath = path.join(process.cwd(), 'dev.db')
-  
-  const adapter = new PrismaLibSql({
-    url: `file:${dbPath}`,
-  })
-  
-  return new PrismaClient({ adapter })
+  try {
+    // 使用相對路徑，Prisma 會自動解析
+    const adapter = new PrismaLibSql({
+      url: `file:./dev.db`,
+    })
+    
+    return new PrismaClient({ adapter })
+  } catch (error) {
+    console.error('Failed to create Prisma client:', error)
+    throw error
+  }
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient()

@@ -13,3 +13,5 @@ export {
   usePrefersDarkMode 
 } from './useMediaQuery';
 export { useClickOutside } from './useClickOutside';
+export { useTools } from './useTools';
+export { useUserRole } from './useUserRole';

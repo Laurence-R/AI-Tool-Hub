@@ -5,3 +5,4 @@
 
 export { ThemeProvider } from './theme-provider';
 export { SearchDialog } from './SearchDialog';
+export { NotificationBell } from './NotificationBell';

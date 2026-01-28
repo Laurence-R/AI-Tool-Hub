@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart, Loader2 } from "lucide-react"
+import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart, Loader2, Shield } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
 import { useSession, signOut } from "next-auth/react"
@@ -21,9 +21,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { SearchDialog } from "@/components/shared"
+import { SearchDialog, NotificationBell } from "@/components/shared"
 import { NAV_LINKS } from "@/constants"
 import { useCompare, useFavorites } from "@/contexts"
+import { useUserRole } from "@/hooks"
 
 export function Navigation() {
     const { theme, setTheme } = useTheme()
@@ -35,6 +36,9 @@ export function Navigation() {
     // 比較和收藏狀態
     const { compareCount } = useCompare()
     const { favoritesCount } = useFavorites()
+    
+    // 用戶角色
+    const { isAdmin } = useUserRole()
 
     const isLoggedIn = status === "authenticated"
     const isLoading = status === "loading"
@@ -129,6 +133,9 @@ export function Navigation() {
                                     </Link>
                                 </Button>
 
+                                {/* Notification Bell */}
+                                <NotificationBell />
+
                                 {/* Search Icon */}
                                 <Button
                                     variant="ghost"
@@ -208,6 +215,17 @@ export function Navigation() {
                                                     設定
                                                 </Link>
                                             </DropdownMenuItem>
+                                            {isAdmin && (
+                                                <>
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href="/admin/submissions" className="cursor-pointer text-primary">
+                                                            <Shield className="w-4 h-4 mr-2" />
+                                                            管理面板
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                </>
+                                            )}
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem 
                                                 className="cursor-pointer text-destructive focus:text-destructive"
@@ -294,6 +312,16 @@ export function Navigation() {
                                                             <Settings className="w-5 h-5" />
                                                             <span>設定</span>
                                                         </Link>
+                                                        {isAdmin && (
+                                                            <Link
+                                                                href="/admin/submissions"
+                                                                className="flex items-center space-x-2 text-primary hover:text-primary/80 transition-colors duration-200 font-body font-medium text-lg mb-4"
+                                                                onClick={() => setMobileMenuOpen(false)}
+                                                            >
+                                                                <Shield className="w-5 h-5" />
+                                                                <span>管理面板</span>
+                                                            </Link>
+                                                        )}
                                                         <button
                                                             className="flex items-center space-x-2 text-destructive hover:text-destructive/80 transition-colors duration-200 font-body font-medium text-lg w-full"
                                                             onClick={() => {
