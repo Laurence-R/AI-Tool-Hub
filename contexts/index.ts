@@ -5,3 +5,4 @@
 
 export { CompareProvider, useCompare, MAX_COMPARE_ITEMS } from './CompareContext'
 export { FavoritesProvider, useFavorites } from './FavoritesContext'
+export { SearchProvider, useSearch } from './SearchContext'

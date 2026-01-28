@@ -1,12 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared";
 import { Navigation } from "@/components/layout";
-import { CompareProvider, FavoritesProvider } from "@/contexts";
+import { CompareProvider, FavoritesProvider, SearchProvider } from "@/contexts";
+import { defaultMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "AI Tool Hub - 打造你的 AI 工具工作流",
-  description: "探索、比較、管理最優質的 AI 工具。打造專屬的高效工作流，提升工作效率。",
+export const metadata: Metadata = defaultMetadata;
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export default function RootLayout({
@@ -28,12 +35,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CompareProvider>
-            <FavoritesProvider>
-              <Navigation />
-              {children}
-            </FavoritesProvider>
-          </CompareProvider>
+          <SearchProvider>
+            <CompareProvider>
+              <FavoritesProvider>
+                <Navigation />
+                {children}
+              </FavoritesProvider>
+            </CompareProvider>
+          </SearchProvider>
         </ThemeProvider>
       </body>
     </html>

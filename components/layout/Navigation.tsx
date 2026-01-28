@@ -4,7 +4,6 @@ import Link from "next/link"
 import { Moon, Sun, Search, User, Menu, LogOut, Settings, UserCircle, GitCompare, Heart } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -21,26 +20,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
-import { NAV_LINKS, SEARCH_ITEMS } from "@/constants"
+import { SearchDialog } from "@/components/shared"
+import { NAV_LINKS } from "@/constants"
 import { useCompare, useFavorites } from "@/contexts"
 
 export function Navigation() {
     const { theme, setTheme } = useTheme()
-    const router = useRouter()
     const [mounted, setMounted] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
@@ -66,11 +51,6 @@ export function Navigation() {
 
     const toggleTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark")
-    }
-
-    const handleSearch = (href: string) => {
-        setSearchOpen(false)
-        router.push(href)
     }
 
     return (
@@ -291,42 +271,7 @@ export function Navigation() {
             </div>
 
             {/* Search Dialog */}
-            <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-                <DialogContent className="p-4 gap-0 bg-background/95 backdrop-blur-xl border-border/50" showCloseButton={false}>
-                    <DialogHeader className="sr-only">
-                        <DialogTitle>搜尋</DialogTitle>
-                    </DialogHeader>
-                    <Command className="bg-transparent">
-                        <CommandInput 
-                            placeholder="搜尋頁面或分類... (Ctrl+K)" 
-                            className="border-0 focus:ring-0 bg-"
-                        />
-                        <CommandList>
-                            <CommandEmpty>找不到相關結果</CommandEmpty>
-                            {Object.entries(
-                                SEARCH_ITEMS.reduce((acc, item) => {
-                                    if (!acc[item.category]) acc[item.category] = []
-                                    acc[item.category].push(item)
-                                    return acc
-                                }, {} as Record<string, typeof SEARCH_ITEMS>)
-                            ).map(([category, items]) => (
-                                <CommandGroup key={category} heading={category}>
-                                    {items.map((item) => (
-                                        <CommandItem
-                                            key={item.href}
-                                            onSelect={() => handleSearch(item.href)}
-                                            className="cursor-pointer"
-                                        >
-                                            <Search className="w-4 h-4 mr-2" />
-                                            {item.label}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            ))}
-                        </CommandList>
-                    </Command>
-                </DialogContent>
-            </Dialog>
+            <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
         </nav >
     )
 }

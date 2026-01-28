@@ -2,6 +2,8 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ToolDetailClient } from "./ToolDetailClient"
 import { getTool, getToolReviews, getRelatedTools, getAllToolsFull } from "@/lib/tools"
+import { generateToolMetadata } from "@/lib/seo"
+import { SoftwareApplicationJsonLd, BreadcrumbJsonLd } from "@/components/seo"
 
 interface PageProps {
     params: Promise<{
@@ -19,10 +21,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         }
     }
 
-    return {
-        title: `${tool.name} - AI Tool Hub`,
+    return generateToolMetadata({
+        name: tool.name,
         description: tool.description,
-    }
+        logo: tool.logo,
+        category: tool.category,
+        id: tool.id,
+    })
 }
 
 // 生成靜態路徑
@@ -44,5 +49,27 @@ export default async function ToolDetailPage({ params }: PageProps) {
     const reviews = getToolReviews(tool.id)
     const relatedTools = getRelatedTools(tool)
 
-    return <ToolDetailClient tool={tool} reviews={reviews} relatedTools={relatedTools} />
+    // 麵包屑導航資料
+    const breadcrumbItems = [
+        { name: "首頁", href: "/" },
+        { name: "工具", href: "/tools" },
+        { name: tool.name, href: `/tools/${tool.id}` },
+    ]
+
+    return (
+        <>
+            <SoftwareApplicationJsonLd
+                name={tool.name}
+                description={tool.description}
+                image={tool.logo}
+                url={tool.url}
+                category={tool.category}
+                rating={tool.rating}
+                ratingCount={tool.reviewCount}
+                price={tool.pricing}
+            />
+            <BreadcrumbJsonLd items={breadcrumbItems} />
+            <ToolDetailClient tool={tool} reviews={reviews} relatedTools={relatedTools} />
+        </>
+    )
 }

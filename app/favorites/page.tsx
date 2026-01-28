@@ -1,79 +1,14 @@
-"use client"
+import { Metadata } from "next"
+import { FavoritesPageClient } from "./FavoritesPageClient"
+import { generatePageMetadata } from "@/lib/seo"
 
-import { useFavorites } from "@/contexts"
-import { getToolById } from "@/lib/tools"
-import { ToolCard } from "@/components/tools"
-import Link from "next/link"
-import { ArrowLeft, Heart, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { Tool } from "@/types"
-import { useEffect, useState } from "react"
+export const metadata: Metadata = generatePageMetadata({
+  title: "我的收藏",
+  description: "管理您收藏的 AI 工具，快速存取喜愛的工具。",
+  path: "/favorites",
+  noIndex: true, // 個人頁面不需要被搜尋引擎索引
+})
 
 export default function FavoritesPage() {
-  const { favorites, favoritesCount } = useFavorites()
-  const [tools, setTools] = useState<Tool[]>([])
-
-  // 獲取收藏的工具資料
-  useEffect(() => {
-    const favTools = favorites
-      .map(id => getToolById(id))
-      .filter((t): t is Tool => t !== undefined)
-    setTools(favTools)
-  }, [favorites])
-
-  return (
-    <main className="min-h-screen bg-gradient-to-b from-background to-primary/5 pt-28 pb-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* 頁面標題 */}
-        <div className="mb-8">
-          <Link 
-            href="/tools" 
-            className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-primary transition-colors mb-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            返回工具列表
-          </Link>
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
-              <Heart className="w-6 h-6 text-red-500" />
-            </div>
-            <div>
-              <h1 className="font-heading font-bold text-3xl md:text-4xl text-foreground">
-                我的收藏
-              </h1>
-              <p className="font-body text-foreground/60 mt-1">
-                {favoritesCount} 個收藏工具
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 收藏內容 */}
-        {favoritesCount === 0 ? (
-          <div className="glass-card rounded-2xl p-12 text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/10 flex items-center justify-center">
-              <Heart className="w-10 h-10 text-red-500/50" />
-            </div>
-            <h2 className="font-heading font-semibold text-2xl text-foreground mb-3">
-              尚未收藏任何工具
-            </h2>
-            <p className="font-body text-foreground/60 mb-6 max-w-md mx-auto">
-              瀏覽工具列表，點擊愛心按鈕將喜歡的工具加入收藏
-            </p>
-            <Button asChild>
-              <Link href="/tools">
-                瀏覽工具
-              </Link>
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tools.map(tool => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
-          </div>
-        )}
-      </div>
-    </main>
-  )
+  return <FavoritesPageClient />
 }
