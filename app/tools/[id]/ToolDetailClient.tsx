@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { 
@@ -9,31 +9,44 @@ import {
     Tag, 
     Check, 
     ChevronRight,
-    ThumbsUp,
-    Calendar,
-    Shield,
     TrendingUp,
     Users,
-    Sparkles,
     Heart
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useFavorites } from "@/contexts"
-import type { Tool, ToolBase, ToolReview } from "@/types"
+import { ReviewSection } from "@/components/tools"
+import type { Tool, ToolBase } from "@/types"
 
 interface ToolDetailClientProps {
     tool: Tool
-    reviews: ToolReview[]
     relatedTools: ToolBase[]
 }
 
-export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClientProps) {
+export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) {
     const [activeTab, setActiveTab] = useState<"overview" | "pricing" | "reviews">("overview")
+    const [reviewCount, setReviewCount] = useState<number>(0)
     const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites()
     
     const toolIdStr = String(tool.id)
     const isFav = isFavorite(toolIdStr)
+
+    // 頁面載入時獲取評論數量
+    useEffect(() => {
+        const fetchReviewCount = async () => {
+            try {
+                const res = await fetch(`/api/reviews?toolId=${tool.id}&limit=1`)
+                const data = await res.json()
+                if (res.ok) {
+                    setReviewCount(data.total)
+                }
+            } catch (error) {
+                console.error("獲取評論數量失敗:", error)
+            }
+        }
+        fetchReviewCount()
+    }, [tool.id])
 
     const handleToggleFavorite = () => {
         if (isFav) {
@@ -180,7 +193,7 @@ export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClie
                             {[
                                 { id: "overview", label: "功能介紹" },
                                 { id: "pricing", label: "定價方案" },
-                                { id: "reviews", label: `評價 (${reviews.length})` }
+                                { id: "reviews", label: `評價 (${reviewCount})` }
                             ].map((tab) => (
                                 <button
                                     key={tab.id}
@@ -308,61 +321,11 @@ export function ToolDetailClient({ tool, reviews, relatedTools }: ToolDetailClie
                             )}
 
                             {activeTab === "reviews" && (
-                                <div className="space-y-6">
-                                    {reviews.map((review) => (
-                                        <div
-                                            key={review.id}
-                                            className="glass-card rounded-2xl p-6 space-y-4 hover:shadow-lg transition-all duration-200"
-                                        >
-                                            {/* 評論者資訊 */}
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
-                                                        {review.userName.charAt(0)}
-                                                    </div>
-                                                    <div>
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="font-body font-semibold text-foreground">
-                                                                {review.userName}
-                                                            </span>
-                                                            {review.verified && (
-                                                                <Shield className="w-4 h-4 text-primary" />
-                                                            )}
-                                                        </div>
-                                                        <div className="flex items-center gap-2 text-sm text-foreground/60">
-                                                            <Calendar className="w-3.5 h-3.5" />
-                                                            {review.date}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {renderStars(review.rating)}
-                                            </div>
-
-                                            {/* 評論內容 */}
-                                            <p className="font-body text-foreground/70 leading-relaxed">
-                                                {review.content}
-                                            </p>
-
-                                            {/* 有幫助按鈕 */}
-                                            <div className="flex items-center gap-2 pt-2">
-                                                <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground/5 hover:bg-foreground/10 text-foreground/60 hover:text-primary transition-all duration-200 cursor-pointer">
-                                                    <ThumbsUp className="w-4 h-4" />
-                                                    <span className="font-body text-sm">
-                                                        有幫助 ({review.helpful})
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                    {reviews.length === 0 && (
-                                        <div className="glass-card rounded-2xl p-12 text-center">
-                                            <p className="font-body text-foreground/60">
-                                                目前尚無評價，成為第一個評價者！
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
+                                <ReviewSection 
+                                    toolId={tool.id} 
+                                    toolName={tool.name} 
+                                    onCountChange={setReviewCount}
+                                />
                             )}
                         </div>
 

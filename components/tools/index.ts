@@ -8,3 +8,4 @@ export { ToolsFilter } from './ToolsFilter';
 export { ToolsSearch } from './ToolsSearch';
 export { CompareButton } from './CompareButton';
 export { FavoriteButton } from './FavoriteButton';
+export { ReviewSection } from './ReviewSection';

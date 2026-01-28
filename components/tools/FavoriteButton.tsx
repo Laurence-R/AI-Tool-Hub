@@ -1,6 +1,8 @@
 "use client"
 
 import { Heart } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useFavorites } from "@/contexts"
 import { cn } from "@/lib/utils"
 
@@ -11,15 +13,24 @@ interface FavoriteButtonProps {
 }
 
 export function FavoriteButton({ toolId, variant = "icon", className }: FavoriteButtonProps) {
+  const { data: session } = useSession()
+  const router = useRouter()
   const { toggleFavorite, isFavorite } = useFavorites()
   
   // 將 toolId 轉換為字串
   const toolIdStr = String(toolId)
-  const favorited = isFavorite(toolIdStr)
+  // 未登入時不顯示收藏狀態
+  const favorited = session ? isFavorite(toolIdStr) : false
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    
+    if (!session) {
+      router.push("/login")
+      return
+    }
+    
     toggleFavorite(toolIdStr)
   }
 

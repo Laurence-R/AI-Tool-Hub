@@ -62,7 +62,7 @@ export function Navigation() {
     }
 
     return (
-        <nav className="fixed top-4 left-4 right-4 z-50">
+        <nav className="fixed top-4 left-4 right-4 z-[60]">
             <div className="max-w-7xl mx-auto">
                 {/* Glassmorphism Navigation */}
                 <div className="glass-card rounded-2xl shadow-lg transition-colors duration-200">
@@ -103,7 +103,7 @@ export function Navigation() {
                                 >
                                     <Link href="/compare">
                                         <GitCompare className="w-5 h-5" />
-                                        {compareCount > 0 && (
+                                        {isLoggedIn && compareCount > 0 && (
                                             <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">
                                                 {compareCount}
                                             </span>
@@ -121,7 +121,7 @@ export function Navigation() {
                                 >
                                     <Link href="/favorites">
                                         <Heart className="w-5 h-5" />
-                                        {favoritesCount > 0 && (
+                                        {isLoggedIn && favoritesCount > 0 && (
                                             <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
                                                 {favoritesCount}
                                             </span>
@@ -186,7 +186,7 @@ export function Navigation() {
                                                 )}
                                             </Button>
                                         </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur-xl border-border/50">
+                                        <DropdownMenuContent align="end" className="w-56 z-[70] bg-background/95 backdrop-blur-xl border-border/50">
                                             <DropdownMenuLabel>
                                                 <div className="flex flex-col">
                                                     <span>{session?.user?.name || "使用者"}</span>

@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ToolDetailClient } from "./ToolDetailClient"
-import { getTool, getToolReviews, getRelatedTools, getAllToolsFull } from "@/lib/tools"
+import { getTool, getRelatedTools, getAllToolsFull } from "@/lib/tools"
 import { generateToolMetadata } from "@/lib/seo"
 import { SoftwareApplicationJsonLd, BreadcrumbJsonLd } from "@/components/seo"
 
@@ -46,7 +46,6 @@ export default async function ToolDetailPage({ params }: PageProps) {
         notFound()
     }
 
-    const reviews = getToolReviews(tool.id)
     const relatedTools = getRelatedTools(tool)
 
     // 麵包屑導航資料
@@ -69,7 +68,7 @@ export default async function ToolDetailPage({ params }: PageProps) {
                 price={tool.pricing}
             />
             <BreadcrumbJsonLd items={breadcrumbItems} />
-            <ToolDetailClient tool={tool} reviews={reviews} relatedTools={relatedTools} />
+            <ToolDetailClient tool={tool} relatedTools={relatedTools} />
         </>
     )
 }

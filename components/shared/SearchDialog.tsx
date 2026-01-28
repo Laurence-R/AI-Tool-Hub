@@ -99,7 +99,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="p-0 gap-0 bg-background/98 backdrop-blur-xl border-border/50 max-w-xl overflow-hidden"
+        className="p-0 gap-0 bg-background/98 backdrop-blur-xl border-border/50 max-w-xl overflow-hidden z-[100]"
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">
@@ -109,7 +109,6 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         <Command className="bg-transparent" shouldFilter={false}>
           {/* 搜尋輸入 */}
           <div className="flex items-center border-b border-border px-3">
-            <Search className="w-5 h-5 text-foreground/40 shrink-0" />
             <CommandInput 
               placeholder="搜尋工具、分類或頁面..." 
               className="border-0 focus:ring-0 h-14 text-base"
@@ -134,7 +133,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             </kbd>
           </div>
 
-          <CommandList className="max-h-[400px] overflow-y-auto">
+          <CommandList className="h-[400px] overflow-y-auto">
             {/* 無結果時顯示 */}
             {query.trim() && !hasResults && (
               <CommandEmpty className="py-12 text-center">

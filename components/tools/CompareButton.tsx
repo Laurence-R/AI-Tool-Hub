@@ -1,6 +1,8 @@
 "use client"
 
 import { GitCompare, Check, X } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useCompare, MAX_COMPARE_ITEMS } from "@/contexts"
 import type { ToolBase } from "@/types"
 import { cn } from "@/lib/utils"
@@ -12,13 +14,21 @@ interface CompareButtonProps {
 }
 
 export function CompareButton({ tool, variant = "default", className }: CompareButtonProps) {
+  const { data: session } = useSession()
+  const router = useRouter()
   const { addToCompare, removeFromCompare, isInCompare, isFull } = useCompare()
   
-  const inCompare = isInCompare(tool.id)
+  // 未登入時不顯示比較狀態
+  const inCompare = session ? isInCompare(tool.id) : false
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    
+    if (!session) {
+      router.push("/login")
+      return
+    }
     
     if (inCompare) {
       removeFromCompare(tool.id)
