@@ -1,261 +1,356 @@
 # 🤖 AI Tool Hub
 
-> 探索最強大的 AI 工具生態系統 - 一站式 AI 工具導航平台
+<p align="center">
+  <strong>探索、比較和評價最佳 AI 工具的一站式平台</strong>
+</p>
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
-[![Status](https://img.shields.io/badge/status-In%20Development-yellow)](https://github.com/Laurence-R/AI-Tool-Hub)
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16.1.1-black?logo=next.js" alt="Next.js">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?logo=tailwind-css" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Prisma-7.3.0-2D3748?logo=prisma" alt="Prisma">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
 
-> ⚠️ **開發中專案** - 本專案正在積極開發中，部分功能尚未完成。歡迎 Star ⭐ 追蹤進度！
+<p align="center">
+  <a href="#-功能特色">功能特色</a> •
+  <a href="#-技術棧">技術棧</a> •
+  <a href="#-快速開始">快速開始</a> •
+  <a href="#-專案結構">專案結構</a> •
+  <a href="#-截圖展示">截圖展示</a>
+</p>
 
-## ✅ 已完成功能
+---
 
-- **🎨 現代化 UI 設計** - 基於 Glassmorphism 風格，專業的視覺設計
-- **🏠 首頁 Landing Page** - Hero Section、功能介紹、使用流程、用戶評價
-- **🔍 工具搜尋與篩選** - 關鍵字搜尋、分類篩選、評分篩選、排序功能
-- **🃏 工具卡片展示** - 工具列表、詳細資訊、評分顯示
-- **🌓 深色模式支持** - 完整的淺色/深色主題切換
-- **📱 響應式設計** - 支持桌面、平板、手機各種設備
-- **🔐 登入頁面** - 基礎認證 UI（後端整合開發中）
+## 📖 專案簡介
 
-## 🚧 開發路線圖
+AI Tool Hub 是一個現代化的 AI 工具探索平台，幫助用戶發現、比較和評價各種 AI 工具。本專案使用 Next.js 16 App Router 構建，採用 Glassmorphism 設計風格，提供完整的用戶系統、社群功能和管理後台。
 
-### 第一階段：基礎功能（進行中）
-- [x] 專案架構搭建
-- [x] UI/UX 設計系統
-- [x] 首頁 Landing Page
-- [x] 工具列表頁面
-- [x] 搜尋與篩選功能
-- [x] 深色模式
-- [ ] 工具詳情頁面
-- [ ] 使用者認證系統
+### 🎯 核心價值
 
-### 第二階段：核心功能（計劃中）
-- [ ] 工具收藏功能
-- [ ] 評價與評分系統
-- [ ] 工具比較功能
-- [ ] 用戶儀表板
-- [ ] 個人資料管理
+- **發現** - 瀏覽精選的 AI 工具目錄
+- **比較** - 並排對比多個工具的功能與定價
+- **評價** - 閱讀和撰寫真實用戶評論
+- **分享** - 建立和分享個人工具合集
 
-### 第三階段：進階功能（未來）
-- [ ] AI 推薦系統
-- [ ] 社群評論與討論
-- [ ] 工具使用統計
-- [ ] API 整合
-- [ ] 多語言支持
+---
 
-## 🚀 技術棧
+## ✨ 功能特色
 
-### 核心框架
-- **[Next.js 16](https://nextjs.org/)** - React 應用框架，支持 App Router
-- **[React 19](https://react.dev/)** - 最新的 React 版本
-- **[TypeScript 5](https://www.typescriptlang.org/)** - 類型安全的 JavaScript
+### 🔍 探索與搜尋
+- **全域搜尋** - 快捷鍵 `Ctrl+K` 開啟搜尋，即時顯示建議
+- **多維篩選** - 分類、定價模式、標籤多條件組合
+- **智能排序** - 評分、名稱、最新更新排序
 
-### UI 與樣式
-- **[Tailwind CSS 4](https://tailwindcss.com/)** - 實用優先的 CSS 框架
-- **[shadcn/ui](https://ui.shadcn.com/)** - 高品質的可重用組件
-- **[Lucide React](https://lucide.dev/)** - 美觀的 SVG 圖標庫
-- **[Radix UI](https://www.radix-ui.com/)** - 無障礙訪問的組件基礎
+### 📊 工具比較
+- **並排對比** - 最多同時比較 4 個工具
+- **全面分析** - 功能特色、定價方案、評分一目瞭然
+- **分享連結** - 一鍵產生比較結果連結
+
+### 👤 完整用戶系統
+- **多方式登入** - Email/密碼、Google OAuth、GitHub OAuth
+- **個人儀表板** - 收藏管理、評論歷史、提交記錄
+- **帳號設定** - 主題切換、通知偏好、安全設定
+- **密碼強度檢測** - 即時顯示密碼安全等級
+
+### ⭐ 收藏與合集
+- **快速收藏** - 一鍵收藏工具，localStorage + 雲端同步
+- **自訂合集** - 建立分類整理的工具合集
+- **隱私控制** - 合集可設為公開或私人
+
+### 💬 社群互動
+- **評論評分** - 1-5 星評分，可填寫優缺點
+- **按讚功能** - 為有幫助的評論按讚
+- **工具提交** - 用戶可提交新發現的 AI 工具
+
+### 🛡️ 管理後台
+- **數據總覽** - 工具數、用戶數、評論數、待審核統計
+- **工具管理** - 新增、編輯、刪除、精選標記
+- **用戶管理** - 角色變更、帳號啟用/停用
+- **評論管理** - 隱藏/刪除不當內容
+- **提交審核** - 審核用戶提交的新工具
+
+### 🎨 設計亮點
+- **Glassmorphism** - 現代毛玻璃設計風格
+- **響應式佈局** - 完美適配桌面、平板、手機
+- **深色模式** - 自動偵測系統偏好 / 手動切換
+- **無障礙設計** - 遵循 WCAG AA+ 標準
+- **動畫效果** - 支持 `prefers-reduced-motion`
+
+---
+
+## 🛠️ 技術棧
+
+### 前端
+| 技術 | 版本 | 說明 |
+|------|------|------|
+| **Next.js** | 16.1.1 | React 框架，使用 App Router |
+| **React** | 19 | UI 函式庫 |
+| **TypeScript** | 5 | 型別安全 |
+| **Tailwind CSS** | 4 | 實用優先的 CSS 框架 |
+| **shadcn/ui** | - | 高品質 UI 元件庫 |
+| **Lucide** | - | 現代化圖標庫 |
+
+### 後端
+| 技術 | 版本 | 說明 |
+|------|------|------|
+| **Prisma** | 7.3.0 | ORM 資料庫工具 |
+| **SQLite** | - | 輕量級關聯式資料庫 |
+| **NextAuth.js** | v5 | 認證解決方案 (JWT) |
 
 ### 開發工具
-- **[ESLint 9](https://eslint.org/)** - 代碼質量檢查
-- **[next-themes](https://github.com/pacocoursey/next-themes)** - 主題切換管理
+| 工具 | 說明 |
+|------|------|
+| **ESLint** | 程式碼品質檢查 |
+| **Prettier** | 程式碼格式化 |
+| **Git** | 版本控制 |
 
-### 設計工作流
-- **[ui-ux-pro-max](/.github/prompts/ui-ux-pro-max.prompt.md)** - 專業的 UI/UX 設計工作流
+---
 
-## 📦 快速開始
+## 🎨 設計系統
 
-### 環境要求
+### 色彩配置
+| 用途 | 色碼 | 預覽 |
+|------|------|------|
+| Primary (主色) | `#60A5FA` | 🔵 |
+| Secondary (次色) | `#818CF8` | 🟣 |
+| CTA (行動) | `#F97316` | 🟠 |
+| Success (成功) | `#22C55E` | 🟢 |
+| Warning (警告) | `#F59E0B` | 🟡 |
+| Error (錯誤) | `#EF4444` | 🔴 |
 
-- Node.js 18.17 或更高版本
-- npm / yarn / pnpm / bun
+### 字體
+- **標題**: Space Grotesk (Google Fonts)
+- **內文**: DM Sans (Google Fonts)
+
+### 動畫規範
+- 過渡時間：150-300ms
+- 緩動函數：ease-out (進入), ease-in (退出)
+- 所有動畫支持 `prefers-reduced-motion`
+
+---
+
+## 🚀 快速開始
+
+### 環境需求
+- Node.js 18+
+- npm 或 pnpm
 
 ### 安裝步驟
 
-1. **克隆專案**
 ```bash
+# 1. 克隆專案
 git clone https://github.com/Laurence-R/AI-Tool-Hub.git
 cd AI-Tool-Hub
-```
 
-2. **安裝依賴**
-```bash
+# 2. 安裝依賴
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
 
-3. **啟動開發伺服器**
-```bash
+# 3. 設定環境變數
+cp .env.example .env
+# 編輯 .env 填入必要設定 (資料庫 URL、OAuth 金鑰等)
+
+# 4. 初始化資料庫
+npx prisma migrate dev
+
+# 5. (可選) 匯入範例資料
+npx ts-node scripts/migrate-tools.ts
+
+# 6. 啟動開發伺服器
 npm run dev
 ```
 
-4. **開啟瀏覽器**
-
 訪問 [http://localhost:3000](http://localhost:3000) 查看應用
+
+### 可用腳本
+
+```bash
+npm run dev      # 開發模式
+npm run build    # 生產構建
+npm run start    # 啟動生產伺服器
+npm run lint     # 程式碼檢查
+```
+
+### 環境變數
+
+```env
+# 資料庫
+DATABASE_URL="file:./dev.db"
+
+# NextAuth
+AUTH_SECRET="your-secret-key"
+
+# OAuth (可選)
+AUTH_GOOGLE_ID=""
+AUTH_GOOGLE_SECRET=""
+AUTH_GITHUB_ID=""
+AUTH_GITHUB_SECRET=""
+```
+
+---
 
 ## 📁 專案結構
 
 ```
 ai-tool-hub/
-├── app/                      # Next.js App Router
-│   ├── (routes)/            # 路由頁面
-│   ├── layout.tsx           # 根布局
-│   └── globals.css          # 全局樣式
-├── components/              # React 組件
-│   ├── ui/                  # shadcn/ui 基礎組件
-│   └── ...                  # 業務組件
-├── lib/                     # 工具函數
-├── public/                  # 靜態資源
-└── .github/                 # GitHub 配置
+├── app/                          # Next.js App Router
+│   ├── (main)/                   # 公開頁面路由群組
+│   │   ├── about/                # 關於我們
+│   │   ├── collections/          # 工具合集
+│   │   ├── compare/              # 工具比較
+│   │   ├── contact/              # 聯絡我們
+│   │   ├── dashboard/            # 用戶儀表板
+│   │   ├── favorites/            # 收藏列表
+│   │   ├── login/                # 登入
+│   │   ├── register/             # 註冊
+│   │   ├── submit/               # 提交工具
+│   │   ├── tools/                # 工具列表與詳情
+│   │   └── page.tsx              # 首頁
+│   ├── (admin)/                  # 管理後台路由群組
+│   │   └── admin/                # 管理頁面
+│   │       ├── tools/            # 工具管理
+│   │       ├── users/            # 用戶管理
+│   │       ├── reviews/          # 評論管理
+│   │       └── submissions/      # 提交審核
+│   ├── api/                      # API 路由
+│   │   ├── auth/                 # 認證 API
+│   │   ├── tools/                # 工具 API
+│   │   ├── reviews/              # 評論 API
+│   │   ├── favorites/            # 收藏 API
+│   │   ├── collections/          # 合集 API
+│   │   └── admin/                # 管理 API
+│   ├── layout.tsx                # 根佈局
+│   └── globals.css               # 全域樣式
+├── components/                   # React 元件
+│   ├── ui/                       # shadcn/ui 基礎元件
+│   ├── layout/                   # 佈局元件 (Header, Footer)
+│   ├── sections/                 # 頁面區塊元件
+│   ├── tools/                    # 工具相關元件
+│   ├── collections/              # 合集相關元件
+│   ├── shared/                   # 共用元件
+│   ├── admin/                    # 管理後台元件
+│   └── providers/                # Context Providers
+├── contexts/                     # React Context
+│   ├── FavoritesContext.tsx      # 收藏狀態
+│   ├── CompareContext.tsx        # 比較狀態
+│   ├── CollectionsContext.tsx    # 合集狀態
+│   └── SearchContext.tsx         # 搜尋狀態
+├── hooks/                        # 自訂 Hooks
+├── lib/                          # 工具函數
+│   ├── prisma.ts                 # Prisma 客戶端
+│   ├── auth.ts                   # 認證設定
+│   ├── formatters.ts             # 格式化函數
+│   └── seo.ts                    # SEO 工具
+├── prisma/                       # Prisma 設定
+│   ├── schema.prisma             # 資料模型
+│   └── migrations/               # 資料庫遷移
+├── services/                     # API 服務層
+├── types/                        # TypeScript 型別
+├── constants/                    # 常數定義
+└── docs/                         # 專案文件
+    └── DEVELOPMENT_PLAN.md       # 開發計畫
 ```
 
-<details>
-<summary>📂 查看完整結構（點擊展開）</summary>
+---
 
-```
-ai-tool-hub/
-├── app/
-│   ├── login/               # 登入頁面
-│   ├── tools/               # 工具列表
-│   ├── layout.tsx
-│   ├── page.tsx             # 首頁
-│   └── globals.css
-├── components/
-│   ├── ui/                  # shadcn 組件
-│   │   ├── button.tsx
-│   │   ├── badge.tsx
-│   │   ├── slider.tsx
-│   │   └── ...
-│   ├── Hero.tsx             # Hero 區塊
-│   ├── Navigation.tsx       # 導航欄
-│   ├── ToolCard.tsx         # 工具卡片
-│   ├── ToolsSearch.tsx      # 搜尋
-│   ├── ToolsFilter.tsx      # 篩選
-│   └── ...
-├── lib/
-│   └── utils.ts             # 工具函數
-├── public/
-│   └── tools/               # Logo 圖片
-├── .github/
-│   └── prompts/             # UI/UX 工作流
-└── package.json
-```
+## 📊 開發進度
 
-</details>
+### 已完成功能 ✅
 
-## 🛠️ 開發指南
+| 階段 | 功能 | 狀態 |
+|------|------|------|
+| **Phase 0** | 專案基礎建設 | ✅ 完成 |
+| - | 設計系統、導覽列、頁尾 | ✅ |
+| - | 首頁、登入頁、工具列表、工具詳情 | ✅ |
+| **Phase 1** | 核心功能強化 | ✅ 完成 |
+| - | 工具比較功能 (最多 4 個) | ✅ |
+| - | 收藏功能 (localStorage) | ✅ |
+| - | 搜尋優化 (Ctrl+K, 即時建議) | ✅ |
+| - | SEO 優化 (Meta, JSON-LD) | ✅ |
+| **Phase 2** | 使用者系統 | ✅ 完成 |
+| - | NextAuth.js 認證 (JWT) | ✅ |
+| - | Google / GitHub OAuth | ✅ |
+| - | 用戶儀表板 | ✅ |
+| - | Prisma + SQLite 資料庫 | ✅ |
+| **Phase 3** | 社群功能 | ✅ 完成 |
+| - | 評論評分系統 | ✅ |
+| - | 工具提交與審核 | ✅ |
+| - | 工具合集功能 | ✅ |
+| - | 程式碼模組化重構 | ✅ |
+| - | 數據架構統一 (JSON → DB) | ✅ |
+| **Phase 4.3** | 管理後台 | ✅ 完成 |
+| - | 管理員儀表板 | ✅ |
+| - | 工具/用戶/評論管理 | ✅ |
+| **Phase 4.4** | UI/UX 優化 | ✅ 完成 |
+| - | 關於/聯絡頁面 | ✅ |
+| - | 密碼強度檢測 | ✅ |
+| - | 配色優化 | ✅ |
 
-### 可用腳本
+### 計畫中功能 📋
 
-```bash
-# 開發模式
-npm run dev
+| 功能 | 說明 |
+|------|------|
+| 智慧推薦 | 基於瀏覽歷史的個人化推薦 |
+| 公開 API | RESTful API 服務 |
 
-# 生產構建
-npm run build
+---
 
-# 啟動生產伺服器
-npm run start
+## 📸 截圖展示
 
-# 代碼檢查
-npm run lint
-```
+> 截圖待補充
 
-### 添加新組件
+| 首頁 | 工具列表 |
+|------|----------|
+| ![首頁](docs/screenshots/home.png) | ![工具列表](docs/screenshots/tools.png) |
 
-使用 shadcn/ui CLI 添加組件：
+| 工具比較 | 用戶儀表板 |
+|----------|------------|
+| ![比較](docs/screenshots/compare.png) | ![儀表板](docs/screenshots/dashboard.png) |
 
-```bash
-npx shadcn@latest add button
-npx shadcn@latest add card
-npx shadcn@latest add dialog
-```
-
-### 設計系統
-
-本專案遵循 [ui-ux-pro-max](.github/prompts/ui-ux-pro-max.prompt.md) 設計工作流：
-
-- 使用 Lucide 圖標（禁用 emoji 作為 UI 圖標）
-- 遵循 WCAG AA+ 無障礙標準
-- 支持 `prefers-reduced-motion`
-- 淺色/深色模式對比度符合標準
-
-## 🎨 設計原則
-
-### 顏色系統
-- **Primary**: #60A5FA (藍色) - 主要品牌色
-- **Secondary**: #818CF8 (紫色) - 次要強調色
-- **CTA**: #F97316 (橙色) - 行動號召按鈕
-- **Success**: #22C55E (綠色)
-- **Warning**: #F59E0B (黃色)
-
-### 字體
-- **標題**: Space Grotesk (Google Fonts)
-- **正文**: DM Sans (Google Fonts)
-
-### 動畫
-- 所有動畫支持 `prefers-reduced-motion`
-- 過渡時間：150-300ms
-- 緩動函數：ease-out (進入), ease-in (退出)
+---
 
 ## 📱 瀏覽器支持
 
-- Chrome (最新版本)
-- Firefox (最新版本)
-- Safari (最新版本)
-- Edge (最新版本)
-
-## 🚀 部署
-
-### Vercel (推薦)
-🤝 貢獻
-
-本專案正在積極開發中，歡迎各種形式的貢獻！
-
-- 🐛 回報 Bug
-- 💡 提出新功能建議
-- 📝 改進文檔
-- 🎨 UI/UX 設計建議
-
-請通過 [GitHub Issues](https://github.com/Laurence-R/AI-Tool-Hub/issues) 與我們聯繫。
-
-## 📊 專案狀態
-
-- **當前版本**: v0.1.0 (Alpha)
-- **開發進度**: ~40%
-- **上次更新**: 2026-01-14
-
-## 📄 授權
-
-本專案採用 MIT 授權 - 詳見 [LICENSE](LICENSE) 文件
-
-## 📧 聯絡方式
-
-- GitHub: [@Laurence-R](https://github.com/Laurence-R)
-- 專案連結: [https://github.com/Laurence-R/AI-Tool-Hub](https://github.com/Laurence-R/AI-Tool-Hub)
+| 瀏覽器 | 版本 |
+|--------|------|
+| Chrome | 最新版本 |
+| Firefox | 最新版本 |
+| Safari | 最新版本 |
+| Edge | 最新版本 |
 
 ---
-
-⭐ 如果這個專案對你有幫助，請給它一個 Star！
-# 啟動
-npm run start
-```
-
-詳細部署說明請參考 [Next.js 部署文檔](https://nextjs.org/docs/app/building-your-application/deploying)
-
-## 📄 授權
-
-本專案採用 MIT 授權 - 詳見 [LICENSE](LICENSE) 文件
 
 ## 🤝 貢獻
 
-歡迎提交 Issue 和 Pull Request！
+歡迎各種形式的貢獻！
+
+1. Fork 本專案
+2. 建立功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交變更 (`git commit -m 'feat: Add some AmazingFeature'`)
+4. 推送分支 (`git push origin feature/AmazingFeature`)
+5. 開啟 Pull Request
+
+### Commit 規範
+
+```
+feat: 新功能
+fix: 修復 bug
+docs: 文件更新
+style: 程式碼格式
+refactor: 重構
+perf: 效能優化
+test: 測試
+chore: 建置/工具
+```
+
+---
+
+## 📄 授權
+
+本專案採用 MIT 授權 - 詳見 [LICENSE](LICENSE) 文件
+
+---
 
 ## 📧 聯絡方式
 
@@ -264,4 +359,10 @@ npm run start
 
 ---
 
-Built with ❤️ using Next.js and Tailwind CSS
+<p align="center">
+  Built with ❤️ using Next.js, React, and Tailwind CSS
+</p>
+
+<p align="center">
+  ⭐ 如果這個專案對你有幫助，請給它一個 Star！
+</p>
