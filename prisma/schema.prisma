@@ -16,17 +16,23 @@ enum UserRole {
   ADMIN
 }
 
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String     @unique
   emailVerified DateTime?
-  password      String?   // 用於 credentials 認證
+  password      String?    // 用於 credentials 認證
   image         String?
   bio           String?
-  role          UserRole  @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  role          UserRole   @default(USER)
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   // 關聯
   accounts      Account[]
@@ -107,6 +113,9 @@ model Tool {
   // 來源提交 (用戶提交的工具)
   submissionId String?        @unique
   submission   ToolSubmission? @relation(fields: [submissionId], references: [id])
+  
+  // 評論關聯
+  reviews      Review[]
 }
 
 // ==================== 工具提交系統 ====================
@@ -174,7 +183,7 @@ model Favorite {
 model Review {
   id        String   @id @default(cuid())
   userId    String
-  toolId    Int      // 對應靜態工具資料中的 ID
+  toolId    Int      // 對應 Tool 模型的 ID
   rating    Int      // 1-5 星
   title     String?
   content   String
@@ -182,10 +191,12 @@ model Review {
   cons      String?  // JSON 字串存儲缺點
   helpful   Int      @default(0)
   verified  Boolean  @default(false)
+  isHidden  Boolean  @default(false) // 管理員隱藏評論
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool  Tool         @relation(fields: [toolId], references: [id], onDelete: Cascade)
   likes ReviewLike[]
 
   @@unique([userId, toolId]) // 每個用戶只能對每個工具評論一次
