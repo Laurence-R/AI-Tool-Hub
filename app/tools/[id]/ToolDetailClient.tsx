@@ -13,12 +13,14 @@ import {
     ChevronRight,
     TrendingUp,
     Users,
-    Heart
+    Heart,
+    FolderPlus
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useFavorites } from "@/contexts"
 import { ReviewSection } from "@/components/tools"
+import { AddToCollectionDialog } from "@/components/collections"
 import type { Tool, ToolBase } from "@/types"
 
 interface ToolDetailClientProps {
@@ -190,6 +192,19 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                     <Heart className={`w-5 h-5 mr-2 ${isFav ? "fill-primary" : ""}`} />
                                     {isFav ? "已收藏" : "加入收藏"}
                                 </Button>
+                                <AddToCollectionDialog
+                                    toolId={tool.id}
+                                    trigger={
+                                        <Button
+                                            variant="outline"
+                                            className="w-full h-12 text-base font-semibold"
+                                            size="lg"
+                                        >
+                                            <FolderPlus className="w-5 h-5 mr-2" />
+                                            加入合集
+                                        </Button>
+                                    }
+                                />
                             </div>
                         </div>
                     </div>

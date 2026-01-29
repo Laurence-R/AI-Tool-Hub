@@ -37,3 +37,15 @@ export type {
     ValueCallback,
     BaseComponentProps,
 } from "./common"
+
+// Collection 相關型別
+export type {
+    Collection,
+    CollectionItem,
+    CollectionWithItems,
+    CollectionsResponse,
+    CollectionResponse,
+    CreateCollectionData,
+    UpdateCollectionData,
+    AddToCollectionData,
+} from "./collection"

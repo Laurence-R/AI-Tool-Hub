@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useFavorites } from "@/contexts"
 import { getToolById } from "@/lib/tools"
-import type { Tool } from "@/types"
+import type { Tool, Collection } from "@/types"
 import { 
   User, 
   Heart, 
@@ -40,7 +40,13 @@ import {
   Clock,
   CheckCircle,
   XCircle,
+  FolderOpen,
+  Plus,
+  Globe,
+  Lock,
 } from "lucide-react"
+import { useCollections } from "@/contexts"
+import { CreateCollectionDialog, CollectionCard } from "@/components/collections"
 
 interface DashboardContentProps {
   user: {
@@ -51,12 +57,13 @@ interface DashboardContentProps {
   }
 }
 
-type TabType = "profile" | "favorites" | "reviews" | "submissions" | "settings"
+type TabType = "profile" | "favorites" | "collections" | "reviews" | "submissions" | "settings"
 
 export function DashboardContent({ user }: DashboardContentProps) {
   const { data: session } = useSession()
   const [activeTab, setActiveTab] = useState<TabType>("profile")
   const { favoritesCount } = useFavorites()
+  const { myCollections, isLoading: isLoadingCollections, fetchMyCollections } = useCollections()
 
   // 使用 session 中的最新資料，若無則使用 props 傳入的資料
   const currentUser = {
@@ -65,9 +72,17 @@ export function DashboardContent({ user }: DashboardContentProps) {
     image: session?.user?.image ?? user.image,
   }
 
+  // 當切換到合集標籤時載入合集
+  useEffect(() => {
+    if (activeTab === "collections" && session?.user?.id) {
+      fetchMyCollections()
+    }
+  }, [activeTab, session?.user?.id, fetchMyCollections])
+
   const menuItems = [
     { id: "profile" as TabType, label: "個人資料", icon: User, badge: null },
     { id: "favorites" as TabType, label: "我的收藏", icon: Heart, badge: favoritesCount },
+    { id: "collections" as TabType, label: "我的合集", icon: FolderOpen, badge: myCollections.length || null },
     { id: "reviews" as TabType, label: "我的評論", icon: Star, badge: null },
     { id: "submissions" as TabType, label: "我的提交", icon: Send, badge: null },
     { id: "settings" as TabType, label: "帳號設定", icon: Settings, badge: null },
@@ -143,8 +158,9 @@ export function DashboardContent({ user }: DashboardContentProps) {
           {/* Main Content */}
           <div className="lg:col-span-3">
             <Card className="p-6 bg-background/40 backdrop-blur-xl border-border/50 min-h-[500px]">
-              {activeTab === "profile" && <ProfileTab user={currentUser} favoritesCount={favoritesCount} />}
+              {activeTab === "profile" && <ProfileTab user={currentUser} favoritesCount={favoritesCount} collectionsCount={myCollections.length} />}
               {activeTab === "favorites" && <FavoritesTab />}
+              {activeTab === "collections" && <CollectionsTab collections={myCollections} isLoading={isLoadingCollections} />}
               {activeTab === "reviews" && <ReviewsTab />}
               {activeTab === "submissions" && <SubmissionsTab />}
               {activeTab === "settings" && <SettingsTab user={currentUser} />}
@@ -157,7 +173,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
 }
 
 // Profile Tab - 可編輯個人資料
-function ProfileTab({ user, favoritesCount }: { user: DashboardContentProps["user"], favoritesCount: number }) {
+function ProfileTab({ user, favoritesCount, collectionsCount }: { user: DashboardContentProps["user"], favoritesCount: number, collectionsCount: number }) {
   const { update } = useSession()
   const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState(user.name || "")
@@ -255,8 +271,8 @@ function ProfileTab({ user, favoritesCount }: { user: DashboardContentProps["use
             </Card>
             <Card className="p-4 bg-primary/5 border-primary/10 text-center">
               <BookMarked className="w-6 h-6 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold">0</p>
-              <p className="text-xs text-muted-foreground">收藏集</p>
+              <p className="text-2xl font-bold">{collectionsCount}</p>
+              <p className="text-xs text-muted-foreground">我的合集</p>
             </Card>
           </div>
         </div>
@@ -349,6 +365,97 @@ function FavoritesTab() {
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+// Collections Tab
+function CollectionsTab({ collections, isLoading }: { collections: Collection[], isLoading: boolean }) {
+  const [showCreateDialog, setShowCreateDialog] = useState(false)
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold">我的合集</h2>
+        {collections.length > 0 && (
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/collections">查看全部</Link>
+            </Button>
+            <Button size="sm" onClick={() => setShowCreateDialog(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              建立合集
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {collections.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+            <FolderOpen className="w-8 h-8 text-primary" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2">尚無合集</h3>
+          <p className="text-muted-foreground mb-4 max-w-md">
+            建立您的第一個合集，整理和分享喜歡的 AI 工具
+          </p>
+          <Button onClick={() => setShowCreateDialog(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            建立合集
+          </Button>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-4">
+          {collections.slice(0, 6).map((collection) => (
+            <Link 
+              key={collection.id} 
+              href={`/collections/${collection.id}`}
+              className="block p-4 rounded-lg border border-border/50 hover:bg-foreground/5 transition-colors"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="font-semibold line-clamp-1">{collection.name}</h3>
+                {collection.isPublic ? (
+                  <Globe className="w-4 h-4 text-muted-foreground shrink-0" />
+                ) : (
+                  <Lock className="w-4 h-4 text-muted-foreground shrink-0" />
+                )}
+              </div>
+              {collection.description && (
+                <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                  {collection.description}
+                </p>
+              )}
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>{collection.itemCount} 個工具</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {collections.length > 6 && (
+        <div className="mt-4 text-center">
+          <Button variant="ghost" asChild>
+            <Link href="/collections">
+              查看全部 {collections.length} 個合集
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
+      )}
+
+      <CreateCollectionDialog 
+        open={showCreateDialog} 
+        onOpenChange={setShowCreateDialog} 
+      />
     </div>
   )
 }

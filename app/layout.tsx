@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/shared";
 import { Navigation } from "@/components/layout";
 import { Footer } from "@/components/layout";
 import { AuthProvider } from "@/components/providers";
-import { CompareProvider, FavoritesProvider, SearchProvider } from "@/contexts";
+import { CompareProvider, FavoritesProvider, SearchProvider, CollectionsProvider } from "@/contexts";
 import { defaultMetadata } from "@/lib/seo";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -42,12 +42,14 @@ export default function RootLayout({
             <SearchProvider>
               <CompareProvider>
                 <FavoritesProvider>
-                  <Navigation />
-                  <main id="main-content">
-                    {children}
-                  </main>
-                  <Footer />
-                  <Toaster position="top-right" richColors />
+                  <CollectionsProvider>
+                    <Navigation />
+                    <main id="main-content">
+                      {children}
+                    </main>
+                    <Footer />
+                    <Toaster position="top-right" richColors />
+                  </CollectionsProvider>
                 </FavoritesProvider>
               </CompareProvider>
             </SearchProvider>

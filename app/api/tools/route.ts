@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get("category")
     const pricing = searchParams.get("pricing")
     const search = searchParams.get("search")
+    const ids = searchParams.get("ids") // 支援按 ID 批量獲取
 
     // 從靜態 JSON 獲取工具
     const staticTools: Tool[] = toolsData as Tool[]
@@ -47,6 +48,19 @@ export async function GET(request: NextRequest) {
 
     // 合併靜態工具和數據庫工具（數據庫工具排在前面）
     let allTools = [...dbToolsMapped, ...staticTools]
+
+    // 按 ID 批量獲取（用於合集頁面）
+    if (ids) {
+      const idArray = ids.split(",").map((id) => parseInt(id.trim(), 10)).filter((id) => !isNaN(id))
+      allTools = allTools.filter((tool) => idArray.includes(tool.id))
+      // 保持請求順序
+      allTools.sort((a, b) => idArray.indexOf(a.id) - idArray.indexOf(b.id))
+      
+      return NextResponse.json({
+        tools: allTools,
+        total: allTools.length,
+      })
+    }
 
     // 過濾
     if (category && category !== "all") {
