@@ -42,7 +42,9 @@ export default function RootLayout({
               <CompareProvider>
                 <FavoritesProvider>
                   <Navigation />
-                  {children}
+                  <main id="main-content">
+                    {children}
+                  </main>
                   <Toaster position="top-right" richColors />
                 </FavoritesProvider>
               </CompareProvider>

@@ -463,7 +463,7 @@ function ReviewForm({
       </div>
 
       {error && (
-        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center gap-2">
+        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm flex items-center gap-2" role="alert">
           <AlertCircle className="w-4 h-4" />
           {error}
         </div>

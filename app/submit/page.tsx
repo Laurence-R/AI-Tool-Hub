@@ -321,7 +321,7 @@ export default function SubmitPage() {
                       className={errors.name ? "border-red-500" : ""}
                     />
                     {errors.name && (
-                      <p className="text-sm text-red-500">{errors.name}</p>
+                      <p className="text-sm text-red-500" role="alert">{errors.name}</p>
                     )}
                   </div>
 
@@ -342,7 +342,7 @@ export default function SubmitPage() {
                       />
                     </div>
                     {errors.url && (
-                      <p className="text-sm text-red-500">{errors.url}</p>
+                      <p className="text-sm text-red-500" role="alert">{errors.url}</p>
                     )}
                   </div>
                 </div>
@@ -362,7 +362,7 @@ export default function SubmitPage() {
                   />
                   <div className="flex justify-between">
                     {errors.description && (
-                      <p className="text-sm text-red-500">{errors.description}</p>
+                      <p className="text-sm text-red-500" role="alert">{errors.description}</p>
                     )}
                     <p className="text-sm text-muted-foreground ml-auto">
                       {formData.description.length} / 500
@@ -425,7 +425,7 @@ export default function SubmitPage() {
                       </SelectContent>
                     </Select>
                     {errors.category && (
-                      <p className="text-sm text-red-500">{errors.category}</p>
+                      <p className="text-sm text-red-500" role="alert">{errors.category}</p>
                     )}
                   </div>
 
@@ -452,7 +452,7 @@ export default function SubmitPage() {
                       </SelectContent>
                     </Select>
                     {errors.pricing && (
-                      <p className="text-sm text-red-500">{errors.pricing}</p>
+                      <p className="text-sm text-red-500" role="alert">{errors.pricing}</p>
                     )}
                   </div>
                 </div>
@@ -542,7 +542,7 @@ export default function SubmitPage() {
                   </div>
 
                   {errors.features && features.length === 0 && (
-                    <p className="text-sm text-red-500">{errors.features}</p>
+                    <p className="text-sm text-red-500" role="alert">{errors.features}</p>
                   )}
 
                   {features.length > 0 && (

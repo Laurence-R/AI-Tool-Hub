@@ -66,9 +66,17 @@ export function Navigation() {
     }
 
     return (
-        <nav className="fixed top-4 left-4 right-4 z-[60]">
-            <div className="max-w-7xl mx-auto">
-                {/* Glassmorphism Navigation */}
+        <>
+            {/* Skip Link for keyboard navigation */}
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+                跳至主要內容
+            </a>
+            <nav className="fixed top-4 left-4 right-4 z-[60]" aria-label="主要導航">
+                <div className="max-w-7xl mx-auto">
+                    {/* Glassmorphism Navigation */}
                 <div className="glass-card rounded-2xl shadow-lg transition-colors duration-200">
                     <div className="px-6 py-4">
                         <div className="flex items-center justify-between">
@@ -355,6 +363,7 @@ export function Navigation() {
 
             {/* Search Dialog */}
             <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
-        </nav >
+            </nav>
+        </>
     )
 }

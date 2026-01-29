@@ -3,6 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 :root {
   --primary: #60A5FA;
   --secondary: #818CF8;
@@ -307,9 +317,30 @@ body {
   .animate-float-slow,
   .animate-gradient-x,
   .animate-fade-in,
-  .animate-fade-in-up {
+  .animate-fade-in-up,
+  .animate-loading-bar {
     animation: none;
     opacity: 1;
     transform: none;
   }
+}
+
+/* Loading bar animation */
+@keyframes loading-bar {
+  0% {
+    width: 0%;
+    transform: translateX(0);
+  }
+  50% {
+    width: 70%;
+    transform: translateX(0);
+  }
+  100% {
+    width: 100%;
+    transform: translateX(100%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 1.5s ease-in-out infinite;
 }

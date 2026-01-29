@@ -202,7 +202,7 @@ export function RegisterForm() {
               />
             </div>
             {errors.name && (
-              <p className="text-xs text-destructive">{errors.name}</p>
+              <p className="text-xs text-destructive" role="alert">{errors.name}</p>
             )}
           </div>
 
@@ -230,7 +230,7 @@ export function RegisterForm() {
               />
             </div>
             {errors.email && (
-              <p className="text-xs text-destructive">{errors.email}</p>
+              <p className="text-xs text-destructive" role="alert">{errors.email}</p>
             )}
           </div>
 
@@ -307,7 +307,7 @@ export function RegisterForm() {
             )}
             
             {errors.password && (
-              <p className="text-xs text-destructive">{errors.password}</p>
+              <p className="text-xs text-destructive" role="alert">{errors.password}</p>
             )}
           </div>
 
@@ -343,7 +343,7 @@ export function RegisterForm() {
               </button>
             </div>
             {errors.confirmPassword && (
-              <p className="text-xs text-destructive">{errors.confirmPassword}</p>
+              <p className="text-xs text-destructive" role="alert">{errors.confirmPassword}</p>
             )}
           </div>
 

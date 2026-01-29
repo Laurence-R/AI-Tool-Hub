@@ -59,9 +59,9 @@ interface Submission {
 }
 
 interface SubmissionCounts {
-  pending: number
-  approved: number
-  rejected: number
+  PENDING: number
+  APPROVED: number
+  REJECTED: number
 }
 
 // 類別對照
@@ -89,7 +89,7 @@ const PRICING_LABELS: Record<string, string> = {
 
 export function AdminSubmissionsClient() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
-  const [counts, setCounts] = useState<SubmissionCounts>({ pending: 0, approved: 0, rejected: 0 })
+  const [counts, setCounts] = useState<SubmissionCounts>({ PENDING: 0, APPROVED: 0, REJECTED: 0 })
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState("PENDING")
   
@@ -221,21 +221,23 @@ export function AdminSubmissionsClient() {
             <TabsTrigger value="PENDING" className="gap-2">
               <Clock className="w-4 h-4" />
               待審核
-              {counts.pending > 0 && (
+              {counts.PENDING > 0 ? (
                 <span className="ml-1 px-1.5 py-0.5 text-xs bg-yellow-500 text-white rounded-full">
-                  {counts.pending}
+                  {counts.PENDING}
                 </span>
+              ) : (
+                <span className="text-xs text-muted-foreground">({counts.PENDING})</span>
               )}
             </TabsTrigger>
             <TabsTrigger value="APPROVED" className="gap-2">
               <CheckCircle className="w-4 h-4" />
               已通過
-              <span className="text-xs text-muted-foreground">({counts.approved})</span>
+              <span className="text-xs text-muted-foreground">({counts.APPROVED})</span>
             </TabsTrigger>
             <TabsTrigger value="REJECTED" className="gap-2">
               <XCircle className="w-4 h-4" />
               已拒絕
-              <span className="text-xs text-muted-foreground">({counts.rejected})</span>
+              <span className="text-xs text-muted-foreground">({counts.REJECTED})</span>
             </TabsTrigger>
           </TabsList>
 
