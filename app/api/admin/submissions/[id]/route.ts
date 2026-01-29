@@ -82,9 +82,24 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
         })
         const nextId = Math.max(maxStaticId, maxDbTool?.id || 0) + 1
 
+        // 生成 slug（將名稱轉換為 URL 友善的格式）
+        const baseSlug = submission.name
+          .toLowerCase()
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-') // 保留中文、字母、數字，其他替換為 -
+          .replace(/^-|-$/g, '') // 移除首尾的 -
+        
+        // 確保 slug 唯一
+        let slug = baseSlug || `tool-${nextId}`
+        let slugSuffix = 1
+        while (await tx.tool.findUnique({ where: { slug } })) {
+          slug = `${baseSlug}-${slugSuffix}`
+          slugSuffix++
+        }
+
         newTool = await tx.tool.create({
           data: {
             id: nextId,
+            slug,
             name: submission.name,
             description: submission.description,
             url: submission.url,

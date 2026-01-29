@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 
 interface FavoritesContextType {
@@ -24,8 +24,11 @@ interface FavoritesContextType {
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined)
 
-// localStorage key
-const FAVORITES_STORAGE_KEY = 'ai-tool-hub-favorites'
+// localStorage key 前綴
+const FAVORITES_STORAGE_PREFIX = 'ai-tool-hub-favorites'
+
+// 根據用戶 ID 生成 localStorage key
+const getFavoritesStorageKey = (userId: string) => `${FAVORITES_STORAGE_PREFIX}-${userId}`
 
 interface FavoritesProviderProps {
   children: ReactNode
@@ -34,83 +37,91 @@ interface FavoritesProviderProps {
 export function FavoritesProvider({ children }: FavoritesProviderProps) {
   const { data: session, status } = useSession()
   const [favorites, setFavorites] = useState<string[]>([])
-  const [isInitialized, setIsInitialized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
+  
+  // 追蹤當前用戶 ID，用於檢測用戶切換
+  const currentUserIdRef = useRef<string | null>(null)
+  const isInitializedRef = useRef(false)
 
-  // 從 localStorage 讀取初始資料
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem(FAVORITES_STORAGE_KEY)
-        if (stored) {
-          const parsed = JSON.parse(stored)
-          if (Array.isArray(parsed)) {
-            // 轉換為字串陣列（向後兼容）
-            setFavorites(parsed.map(String))
-          }
+  // 從 localStorage 載入收藏
+  const loadFromLocalStorage = useCallback((key: string): string[] => {
+    if (typeof window === 'undefined') return []
+    try {
+      const stored = localStorage.getItem(key)
+      if (stored) {
+        const parsed = JSON.parse(stored)
+        if (Array.isArray(parsed)) {
+          return parsed.map(String)
         }
-      } catch (error) {
-        console.warn('Error reading favorites from localStorage:', error)
       }
-      setIsInitialized(true)
+    } catch (error) {
+      console.warn('Error reading favorites from localStorage:', error)
+    }
+    return []
+  }, [])
+
+  // 儲存到 localStorage
+  const saveToLocalStorage = useCallback((key: string, data: string[]) => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.setItem(key, JSON.stringify(data))
+    } catch (error) {
+      console.warn('Error saving favorites to localStorage:', error)
     }
   }, [])
 
-  // 當使用者登入時，從後端載入收藏並同步
+  // 處理用戶狀態變化（登入/登出/切換帳號）
   useEffect(() => {
-    if (status === 'authenticated' && session?.user && isInitialized) {
-      loadAndSyncFavorites()
-    }
-  }, [status, session, isInitialized])
-
-  // 從後端載入收藏並與本地合併
-  const loadAndSyncFavorites = async () => {
-    setIsLoading(true)
-    setIsSyncing(true)
-    try {
-      // 取得本地收藏
-      const localFavorites = [...favorites]
+    const userId = session?.user?.id || null
+    const previousUserId = currentUserIdRef.current
+    
+    // 如果用戶改變（包括登出）
+    if (userId !== previousUserId) {
+      currentUserIdRef.current = userId
+      isInitializedRef.current = true
       
-      // 從後端載入收藏
+      if (status === 'authenticated' && userId) {
+        // 已登入：從後端載入收藏
+        loadFavoritesFromServer()
+      } else if (status === 'unauthenticated') {
+        // 未登入：清空收藏（因為未登入用戶無法使用收藏功能）
+        setFavorites([])
+      }
+    }
+  }, [status, session?.user?.id])
+
+  // 從後端載入收藏
+  const loadFavoritesFromServer = async () => {
+    if (!session?.user?.id) return
+    
+    setIsLoading(true)
+    try {
       const response = await fetch('/api/favorites')
       if (response.ok) {
         const data = await response.json()
         const serverFavorites: string[] = data.favorites || []
+        setFavorites(serverFavorites)
         
-        // 合併本地和伺服器收藏（去重）
-        const merged = Array.from(new Set([...serverFavorites, ...localFavorites]))
-        
-        // 如果本地有新的收藏，同步到伺服器
-        const newLocalFavorites = localFavorites.filter(id => !serverFavorites.includes(id))
-        if (newLocalFavorites.length > 0) {
-          await fetch('/api/favorites/sync', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ toolIds: newLocalFavorites }),
-          })
-        }
-        
-        setFavorites(merged)
+        // 同時更新 localStorage（用於離線體驗）
+        saveToLocalStorage(getFavoritesStorageKey(session.user.id), serverFavorites)
       }
     } catch (error) {
       console.error('Error loading favorites from server:', error)
+      // 如果載入失敗，嘗試從 localStorage 恢復
+      const cached = loadFromLocalStorage(getFavoritesStorageKey(session.user.id))
+      setFavorites(cached)
     } finally {
       setIsLoading(false)
-      setIsSyncing(false)
     }
   }
 
-  // 當收藏清單變化時，同步到 localStorage
+  // 當收藏清單變化時，同步到 localStorage（僅限已登入用戶）
   useEffect(() => {
-    if (isInitialized && typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
-      } catch (error) {
-        console.warn('Error saving favorites to localStorage:', error)
-      }
+    if (isInitializedRef.current && session?.user?.id && typeof window !== 'undefined') {
+      saveToLocalStorage(getFavoritesStorageKey(session.user.id), favorites)
     }
-  }, [favorites, isInitialized])
+  }, [favorites, session?.user?.id, saveToLocalStorage])
 
   // 加入收藏
   const addToFavorites = useCallback(async (toolId: string) => {

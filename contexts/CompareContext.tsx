@@ -1,6 +1,7 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode, useRef } from 'react'
+import { useSession } from 'next-auth/react'
 import type { ToolBase } from '@/types'
 
 // 最大比較數量
@@ -25,45 +26,78 @@ interface CompareContextType {
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined)
 
-// localStorage key
-const COMPARE_STORAGE_KEY = 'ai-tool-hub-compare'
+// localStorage key 前綴
+const COMPARE_STORAGE_PREFIX = 'ai-tool-hub-compare'
+
+// 根據用戶 ID 生成 localStorage key
+const getCompareStorageKey = (userId: string) => `${COMPARE_STORAGE_PREFIX}-${userId}`
 
 interface CompareProviderProps {
   children: ReactNode
 }
 
 export function CompareProvider({ children }: CompareProviderProps) {
+  const { data: session, status } = useSession()
   const [compareList, setCompareList] = useState<ToolBase[]>([])
-  const [isInitialized, setIsInitialized] = useState(false)
+  
+  // 追蹤當前用戶 ID，用於檢測用戶切換
+  const currentUserIdRef = useRef<string | null>(null)
+  const isInitializedRef = useRef(false)
 
-  // 從 localStorage 讀取初始資料
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem(COMPARE_STORAGE_KEY)
-        if (stored) {
-          const parsed = JSON.parse(stored)
-          if (Array.isArray(parsed)) {
-            setCompareList(parsed.slice(0, MAX_COMPARE_ITEMS))
-          }
+  // 從 localStorage 載入比較清單
+  const loadFromLocalStorage = useCallback((key: string): ToolBase[] => {
+    if (typeof window === 'undefined') return []
+    try {
+      const stored = localStorage.getItem(key)
+      if (stored) {
+        const parsed = JSON.parse(stored)
+        if (Array.isArray(parsed)) {
+          return parsed.slice(0, MAX_COMPARE_ITEMS)
         }
-      } catch (error) {
-        console.warn('Error reading compare list from localStorage:', error)
       }
-      setIsInitialized(true)
+    } catch (error) {
+      console.warn('Error reading compare list from localStorage:', error)
+    }
+    return []
+  }, [])
+
+  // 儲存到 localStorage
+  const saveToLocalStorage = useCallback((key: string, data: ToolBase[]) => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.setItem(key, JSON.stringify(data))
+    } catch (error) {
+      console.warn('Error saving compare list to localStorage:', error)
     }
   }, [])
 
-  // 當比較清單變化時，同步到 localStorage
+  // 處理用戶狀態變化（登入/登出/切換帳號）
   useEffect(() => {
-    if (isInitialized && typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(COMPARE_STORAGE_KEY, JSON.stringify(compareList))
-      } catch (error) {
-        console.warn('Error saving compare list to localStorage:', error)
+    const userId = session?.user?.id || null
+    const previousUserId = currentUserIdRef.current
+    
+    // 如果用戶改變（包括登出）
+    if (userId !== previousUserId) {
+      currentUserIdRef.current = userId
+      isInitializedRef.current = true
+      
+      if (status === 'authenticated' && userId) {
+        // 已登入：從 localStorage 載入該用戶的比較清單
+        const savedCompareList = loadFromLocalStorage(getCompareStorageKey(userId))
+        setCompareList(savedCompareList)
+      } else if (status === 'unauthenticated') {
+        // 未登入：清空比較清單（因為未登入用戶無法使用比較功能）
+        setCompareList([])
       }
     }
-  }, [compareList, isInitialized])
+  }, [status, session?.user?.id, loadFromLocalStorage])
+
+  // 當比較清單變化時，同步到 localStorage（僅限已登入用戶）
+  useEffect(() => {
+    if (isInitializedRef.current && session?.user?.id && typeof window !== 'undefined') {
+      saveToLocalStorage(getCompareStorageKey(session.user.id), compareList)
+    }
+  }, [compareList, session?.user?.id, saveToLocalStorage])
 
   // 加入比較
   const addToCompare = useCallback((tool: ToolBase): boolean => {

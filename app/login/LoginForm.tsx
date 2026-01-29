@@ -94,6 +94,8 @@ export function LoginForm() {
       case "OAuthSignin":
       case "OAuthCallback":
         return "OAuth 登入失敗，請稍後再試"
+      case "Configuration":
+        return "OAuth 尚未設定，請使用 Email 登入"
       default:
         return error
     }
