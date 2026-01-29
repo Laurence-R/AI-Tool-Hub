@@ -16,6 +16,7 @@ import {
   Eye,
   EyeOff,
   Check,
+  X,
   Sun,
   Moon,
   Monitor,
@@ -26,6 +27,24 @@ import {
   LogOut,
   ChevronRight,
 } from "lucide-react"
+
+// 密碼強度檢查
+const checkPasswordStrength = (password: string) => {
+  const checks = {
+    length: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    lowercase: /[a-z]/.test(password),
+    number: /[0-9]/.test(password),
+  }
+  
+  const passed = Object.values(checks).filter(Boolean).length
+  let strength: "weak" | "medium" | "strong" = "weak"
+  
+  if (passed >= 4) strength = "strong"
+  else if (passed >= 3) strength = "medium"
+  
+  return { checks, strength, passed }
+}
 
 interface SettingsTabProps {
   user: {
@@ -150,13 +169,28 @@ function SecuritySettings() {
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ type: "success" | "error", text: string } | null>(null)
 
+  const passwordStrength = checkPasswordStrength(newPassword)
+
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
       setMessage({ type: "error", text: "新密碼與確認密碼不符" })
       return
     }
-    if (newPassword.length < 8) {
+    // 檢查所有密碼要求
+    if (!passwordStrength.checks.length) {
       setMessage({ type: "error", text: "密碼至少需要 8 個字元" })
+      return
+    }
+    if (!passwordStrength.checks.uppercase) {
+      setMessage({ type: "error", text: "密碼需要包含大寫字母" })
+      return
+    }
+    if (!passwordStrength.checks.lowercase) {
+      setMessage({ type: "error", text: "密碼需要包含小寫字母" })
+      return
+    }
+    if (!passwordStrength.checks.number) {
+      setMessage({ type: "error", text: "密碼需要包含數字" })
       return
     }
 
@@ -219,8 +253,48 @@ function SecuritySettings() {
             type={showPasswords ? "text" : "password"}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="輸入新密碼（至少 8 個字元）"
+            placeholder="輸入新密碼"
           />
+          
+          {/* Password Strength Indicator */}
+          {newPassword && (
+            <div className="space-y-2 mt-2">
+              <div className="flex gap-1">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className={`h-1 flex-1 rounded-full transition-colors ${
+                      i <= passwordStrength.passed
+                        ? passwordStrength.strength === "strong"
+                          ? "bg-green-500"
+                          : passwordStrength.strength === "medium"
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                        : "bg-muted"
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-1 text-xs">
+                <div className={`flex items-center gap-1 ${passwordStrength.checks.length ? "text-green-500" : "text-muted-foreground"}`}>
+                  {passwordStrength.checks.length ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                  8 字元以上
+                </div>
+                <div className={`flex items-center gap-1 ${passwordStrength.checks.uppercase ? "text-green-500" : "text-muted-foreground"}`}>
+                  {passwordStrength.checks.uppercase ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                  大寫字母
+                </div>
+                <div className={`flex items-center gap-1 ${passwordStrength.checks.lowercase ? "text-green-500" : "text-muted-foreground"}`}>
+                  {passwordStrength.checks.lowercase ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                  小寫字母
+                </div>
+                <div className={`flex items-center gap-1 ${passwordStrength.checks.number ? "text-green-500" : "text-muted-foreground"}`}>
+                  {passwordStrength.checks.number ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                  數字
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="confirmPassword">確認新密碼</Label>
