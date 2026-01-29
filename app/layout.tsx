@@ -5,6 +5,7 @@ import { Navigation } from "@/components/layout";
 import { AuthProvider } from "@/components/providers";
 import { CompareProvider, FavoritesProvider, SearchProvider } from "@/contexts";
 import { defaultMetadata } from "@/lib/seo";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -42,6 +43,7 @@ export default function RootLayout({
                 <FavoritesProvider>
                   <Navigation />
                   {children}
+                  <Toaster position="top-right" richColors />
                 </FavoritesProvider>
               </CompareProvider>
             </SearchProvider>
