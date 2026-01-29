@@ -210,6 +210,34 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 - [x] 新增套件
   - [x] date-fns (日期格式化)
 
+#### 3.4 程式碼模組化重構 ✅
+- [x] 共用格式化函式抽取
+  - [x] `lib/formatters.ts` - 定價標籤、顏色、日期格式化
+  - [x] 取代 4+ 處重複的 `getPricingLabel`、`getPricingColor` 函式
+- [x] 共用 UI 元件抽取
+  - [x] `components/ui/star-rating.tsx` - StarRating (顯示) + StarRatingInput (互動)
+  - [x] `components/ui/pricing-badge.tsx` - PricingBadge、PricingBadgeShadcn
+  - [x] 支援多種尺寸 (xs/sm/md/lg) 與變體 (badge/text)
+- [x] 共用常量抽取
+  - [x] `constants/labels.ts` - 分類標籤、定價選項、狀態標籤
+  - [x] `getCategoryLabel()` 函式統一分類顯示
+- [x] DashboardContent 模組化
+  - [x] 原 1203 行 → 150 行 (減少 87%)
+  - [x] 拆分為 6 個獨立 Tab 元件
+  - [x] `app/dashboard/tabs/` 目錄結構
+    - [x] ProfileTab.tsx
+    - [x] FavoritesTab.tsx
+    - [x] CollectionsTab.tsx
+    - [x] ReviewsTab.tsx
+    - [x] SubmissionsTab.tsx
+    - [x] SettingsTab.tsx
+- [x] 元件更新以使用共用模組
+  - [x] ToolCard.tsx → PricingBadge
+  - [x] ToolDetailClient.tsx → StarRating + PricingBadgeShadcn
+  - [x] ComparePageClient.tsx → PricingBadge
+  - [x] ReviewSection.tsx → StarRating + StarRatingInput
+  - [x] AdminSubmissionsClient.tsx → 共用常量
+
 ---
 
 ### 📋 Phase 4: 進階功能
@@ -246,6 +274,7 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 | Phase 3.1 評論系統 | 2025-01-29 | ✅ 完成 |
 | Phase 3.2 工具提交 | 2025-01-29 | ✅ 完成 |
 | Phase 3.3 工具合集 | 2025-01-30 | ✅ 完成 |
+| Phase 3.4 模組化重構 | 2025-01-30 | ✅ 完成 |
 | Phase 4 完成 | 2025-03-01 | 📋 計畫中 |
 
 ---
