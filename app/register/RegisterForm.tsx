@@ -364,7 +364,8 @@ export function RegisterForm() {
           </Button>
         </form>
 
-        {/* Divider */}
+        {/* TODO: OAuth 註冊功能延後開發，取消註解以啟用 */}
+        {/* OAuth Divider and Buttons - Hidden for now
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-border/50" />
@@ -375,8 +376,6 @@ export function RegisterForm() {
             </span>
           </div>
         </div>
-
-        {/* OAuth Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <Button
             type="button"
@@ -414,6 +413,7 @@ export function RegisterForm() {
             GitHub
           </Button>
         </div>
+        */}
 
         {/* Sign In Link */}
         <p className="text-center text-sm text-muted-foreground mt-6">
