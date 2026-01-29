@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared";
 import { Navigation } from "@/components/layout";
+import { Footer } from "@/components/layout";
 import { AuthProvider } from "@/components/providers";
 import { CompareProvider, FavoritesProvider, SearchProvider } from "@/contexts";
 import { defaultMetadata } from "@/lib/seo";
@@ -45,6 +46,7 @@ export default function RootLayout({
                   <main id="main-content">
                     {children}
                   </main>
+                  <Footer />
                   <Toaster position="top-right" richColors />
                 </FavoritesProvider>
               </CompareProvider>

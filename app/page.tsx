@@ -22,7 +22,6 @@ export default function Home() {
         <Testimonials />
         <FinalCTA />
       </main>
-      <Footer />
     </div>
   );
 }
