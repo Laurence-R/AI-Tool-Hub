@@ -16,6 +16,7 @@ import {
   Trash2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { PricingBadge } from "@/components/ui/pricing-badge"
 import type { Tool } from "@/types"
 import { useEffect, useState } from "react"
 
@@ -47,25 +48,6 @@ export function ComparePageClient() {
     }
   }
 
-  // 定價標籤轉換
-  const getPricingLabel = (pricing: string) => {
-    switch (pricing) {
-      case "free": return "免費"
-      case "freemium": return "免費增值"
-      case "paid": return "付費"
-      default: return pricing
-    }
-  }
-
-  // 定價顏色
-  const getPricingColor = (pricing: string) => {
-    switch (pricing) {
-      case "free": return "text-green-600 dark:text-green-400"
-      case "freemium": return "text-blue-600 dark:text-blue-400"
-      case "paid": return "text-orange-600 dark:text-orange-400"
-      default: return "text-foreground"
-    }
-  }
 
   // 收集所有工具的功能（用於對比表格）
   const allFeatures = Array.from(
@@ -225,9 +207,7 @@ export function ComparePageClient() {
                       <td className="p-4 font-medium text-foreground/70">定價模式</td>
                       {tools.map(tool => tool && (
                         <td key={tool.id} className="p-4 text-center">
-                          <span className={`font-semibold ${getPricingColor(tool.pricing)}`}>
-                            {getPricingLabel(tool.pricing)}
-                          </span>
+                          <PricingBadge pricing={tool.pricing} variant="text" />
                         </td>
                       ))}
                     </tr>

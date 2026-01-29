@@ -6,34 +6,9 @@ import type { ToolCardProps } from "@/types"
 import { CompareButton } from "./CompareButton"
 import { FavoriteButton } from "./FavoriteButton"
 import { SafeImage } from "@/components/ui/safe-image"
+import { PricingBadge } from "@/components/ui/pricing-badge"
 
 export function ToolCard({ tool }: ToolCardProps) {
-    const getPricingLabel = (pricing: string) => {
-        switch (pricing) {
-            case "free":
-                return "免費"
-            case "freemium":
-                return "免費增值"
-            case "paid":
-                return "付費"
-            default:
-                return pricing
-        }
-    }
-
-    const getPricingColor = (pricing: string) => {
-        switch (pricing) {
-            case "free":
-                return "bg-green-500/10 text-green-500 dark:bg-green-500/20"
-            case "freemium":
-                return "bg-blue-500/10 text-blue-500 dark:bg-blue-500/20"
-            case "paid":
-                return "bg-orange-500/10 text-orange-500 dark:bg-orange-500/20"
-            default:
-                return "bg-foreground/10 text-foreground"
-        }
-    }
-
     const handleVisitClick = (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
@@ -61,9 +36,7 @@ export function ToolCard({ tool }: ToolCardProps) {
                         {/* 比較按鈕 */}
                         <CompareButton tool={tool} variant="icon" />
                         {/* 定價標籤 */}
-                        <span className={`px-3 py-1 rounded-lg text-xs font-medium ${getPricingColor(tool.pricing)}`}>
-                            {getPricingLabel(tool.pricing)}
-                        </span>
+                        <PricingBadge pricing={tool.pricing} size="sm" />
                     </div>
                 </div>
 

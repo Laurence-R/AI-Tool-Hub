@@ -34,6 +34,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { toast } from "sonner"
+import { CATEGORY_LABELS, getCategoryLabel } from "@/constants/labels"
+import { PRICING_LABELS, getPricingLabel } from "@/lib/formatters"
 
 interface Submission {
   id: string
@@ -64,28 +66,6 @@ interface SubmissionCounts {
   REJECTED: number
 }
 
-// 類別對照
-const CATEGORY_LABELS: Record<string, string> = {
-  writing: "寫作助手",
-  image: "圖像生成",
-  video: "影片製作",
-  audio: "音訊處理",
-  coding: "程式開發",
-  productivity: "生產力工具",
-  research: "研究分析",
-  marketing: "行銷工具",
-  education: "教育學習",
-  chatbot: "聊天機器人",
-  other: "其他",
-}
-
-// 定價對照
-const PRICING_LABELS: Record<string, string> = {
-  free: "免費",
-  freemium: "免費增值",
-  paid: "付費",
-  subscription: "訂閱制",
-}
 
 export function AdminSubmissionsClient() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
@@ -285,11 +265,11 @@ export function AdminSubmissionsClient() {
                         <div className="flex flex-wrap items-center gap-4 text-sm">
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <Tag className="w-4 h-4" />
-                            {CATEGORY_LABELS[submission.category] || submission.category}
+                            {getCategoryLabel(submission.category)}
                           </span>
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <DollarSign className="w-4 h-4" />
-                            {PRICING_LABELS[submission.pricing] || submission.pricing}
+                            {getPricingLabel(submission.pricing)}
                           </span>
                           <span className="flex items-center gap-1 text-muted-foreground">
                             <User className="w-4 h-4" />
@@ -372,7 +352,7 @@ export function AdminSubmissionsClient() {
                     <div>
                       <DialogTitle>{detailDialog.submission.name}</DialogTitle>
                       <DialogDescription>
-                        {CATEGORY_LABELS[detailDialog.submission.category]} · {PRICING_LABELS[detailDialog.submission.pricing]}
+                        {getCategoryLabel(detailDialog.submission.category)} · {getPricingLabel(detailDialog.submission.pricing)}
                       </DialogDescription>
                     </div>
                   </div>

@@ -37,3 +37,13 @@ export {
     SOCIAL_LINKS,
     EXTERNAL_LINKS
 } from "./site"
+
+// 標籤常量
+export {
+    CATEGORY_LABELS,
+    getCategoryLabel,
+    SUBMIT_CATEGORIES,
+    SUBMIT_PRICING_OPTIONS,
+    SUBMISSION_STATUS_LABELS,
+    getSubmissionStatusLabel
+} from "./labels"

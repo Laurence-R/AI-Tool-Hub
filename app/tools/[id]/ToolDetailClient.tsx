@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { SafeImage } from "@/components/ui/safe-image"
 import { 
-    Star, 
     ExternalLink, 
     Tag, 
     Check, 
@@ -21,6 +20,8 @@ import { Badge } from "@/components/ui/badge"
 import { useFavorites } from "@/contexts"
 import { ReviewSection } from "@/components/tools"
 import { AddToCollectionDialog } from "@/components/collections"
+import { StarRating } from "@/components/ui/star-rating"
+import { PricingBadgeShadcn } from "@/components/ui/pricing-badge"
 import type { Tool, ToolBase } from "@/types"
 
 interface ToolDetailClientProps {
@@ -68,36 +69,7 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
         }
     }
 
-    const getPricingLabel = (pricing: string) => {
-        const labels = { free: "免費", freemium: "免費增值", paid: "付費" }
-        return labels[pricing as keyof typeof labels] || pricing
-    }
 
-    const getPricingColor = (pricing: string) => {
-        const colors = {
-            free: "bg-green-500/10 text-green-500",
-            freemium: "bg-blue-500/10 text-blue-500",
-            paid: "bg-orange-500/10 text-orange-500"
-        }
-        return colors[pricing as keyof typeof colors] || "bg-foreground/10 text-foreground"
-    }
-
-    const renderStars = (rating: number) => {
-        return (
-            <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                        key={star}
-                        className={`w-4 h-4 ${
-                            star <= rating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-foreground/20"
-                        }`}
-                    />
-                ))}
-            </div>
-        )
-    }
 
     return (
         <div className="min-h-screen bg-background">
@@ -125,9 +97,7 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                             <h1 className="font-heading font-bold text-3xl lg:text-4xl text-foreground">
                                                 {tool.name}
                                             </h1>
-                                            <Badge className={getPricingColor(tool.pricing)}>
-                                                {getPricingLabel(tool.pricing)}
-                                            </Badge>
+                                            <PricingBadgeShadcn pricing={tool.pricing} />
                                         </div>
                                         <p className="font-body text-foreground/60 text-base lg:text-lg">
                                             {tool.description}
@@ -138,7 +108,7 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                 {/* 評分與統計 */}
                                 <div className="flex items-center gap-6 flex-wrap">
                                     <div className="flex items-center gap-2">
-                                        {renderStars(Math.round(tool.rating))}
+                                        <StarRating rating={tool.rating} size="sm" />
                                         <span className="font-heading font-bold text-xl text-foreground">
                                             {tool.rating.toFixed(1)}
                                         </span>
@@ -391,7 +361,7 @@ export function ToolDetailClient({ tool, relatedTools }: ToolDetailClientProps) 
                                                     <ChevronRight className="w-5 h-5 text-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 shrink-0" />
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    {renderStars(Math.round(relatedTool.rating))}
+                                                    <StarRating rating={relatedTool.rating} size="sm" />
                                                     <span className="font-body text-sm text-foreground/60">
                                                         {relatedTool.rating.toFixed(1)}
                                                     </span>

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { 
-  Star, 
   ThumbsUp,
   ThumbsDown,
   Heart,
@@ -23,6 +22,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { StarRating, StarRatingInput } from "@/components/ui/star-rating"
 import Link from "next/link"
 
 interface Review {
@@ -147,24 +147,6 @@ export function ReviewSection({ toolId, toolName, onCountChange }: ReviewSection
     setShowForm(false)
   }
 
-  // 渲染星星
-  const renderStars = (rating: number, size: "sm" | "md" = "md") => {
-    const sizeClass = size === "sm" ? "w-4 h-4" : "w-5 h-5"
-    return (
-      <div className="flex items-center gap-0.5">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            className={`${sizeClass} ${
-              star <= rating
-                ? "fill-yellow-400 text-yellow-400"
-                : "text-foreground/20"
-            }`}
-          />
-        ))}
-      </div>
-    )
-  }
 
   return (
     <div className="space-y-6">
@@ -172,7 +154,7 @@ export function ReviewSection({ toolId, toolName, onCountChange }: ReviewSection
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            {renderStars(Math.round(avgRating))}
+            <StarRating rating={avgRating} size="md" />
             <span className="font-bold text-xl">{avgRating.toFixed(1)}</span>
           </div>
           <span className="text-foreground/60">
@@ -286,7 +268,7 @@ export function ReviewSection({ toolId, toolName, onCountChange }: ReviewSection
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {renderStars(review.rating, "sm")}
+                  <StarRating rating={review.rating} size="sm" />
                   {review.isOwner && (
                     <Button
                       variant="ghost"
@@ -473,24 +455,13 @@ function ReviewForm({
       <div className="space-y-2">
         <Label>評分 *</Label>
         <div className="flex items-center gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => setRating(star)}
-              onMouseEnter={() => setHoverRating(star)}
-              onMouseLeave={() => setHoverRating(0)}
-              className="p-1 transition-transform hover:scale-110"
-            >
-              <Star
-                className={`w-8 h-8 transition-colors ${
-                  star <= (hoverRating || rating)
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-foreground/20"
-                }`}
-              />
-            </button>
-          ))}
+          <StarRatingInput
+            value={rating}
+            onChange={setRating}
+            hoverValue={hoverRating}
+            onHoverChange={setHoverRating}
+            size="md"
+          />
           {rating > 0 && (
             <span className="ml-2 text-sm text-foreground/60">
               {["", "很差", "不太好", "一般", "很好", "非常好"][rating]}
