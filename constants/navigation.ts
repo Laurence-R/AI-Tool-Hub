@@ -11,8 +11,8 @@ export const NAV_LINKS: NavLink[] = [
     { href: "/", label: "首頁" },
     { href: "/tools", label: "工具列表" },
     { href: "/collections", label: "合集" },
-    { href: "#features", label: "功能特色" },
-    { href: "#how-it-works", label: "使用指南" },
+    { href: "/about", label: "關於我們" },
+    { href: "/contact", label: "聯絡我們" },
 ]
 
 /**
@@ -23,6 +23,8 @@ export const SEARCH_ITEMS = [
     { id: "home", label: "首頁", href: "/", category: "頁面" },
     { id: "tools", label: "工具列表", href: "/tools", category: "頁面" },
     { id: "collections", label: "合集", href: "/collections", category: "頁面" },
+    { id: "about", label: "關於我們", href: "/about", category: "頁面" },
+    { id: "contact", label: "聯絡我們", href: "/contact", category: "頁面" },
     { id: "login", label: "登入", href: "/login", category: "頁面" },
     
     // 分類

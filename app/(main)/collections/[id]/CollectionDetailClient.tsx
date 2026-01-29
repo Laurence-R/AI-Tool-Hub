@@ -16,7 +16,7 @@ import {
   User,
   Clock,
   MoreVertical,
-  X
+  MoreHorizontal,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -296,19 +296,33 @@ export function CollectionDetailClient({ collectionId }: CollectionDetailClientP
               <div key={tool.id} className="relative group">
                 <ToolCard tool={tool} />
                 {isOwner && (
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8"
-                    onClick={() => handleRemoveTool(tool.id)}
-                    disabled={removingToolId === tool.id}
-                  >
-                    {removingToolId === tool.id ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <X className="w-4 h-4" />
-                    )}
-                  </Button>
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="secondary"
+                          size="icon"
+                          className="w-8 h-8 backdrop-blur-sm bg-background/80 hover:bg-background shadow-md"
+                          disabled={removingToolId === tool.id}
+                        >
+                          {removingToolId === tool.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <MoreHorizontal className="w-4 h-4" />
+                          )}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="text-destructive focus:text-destructive cursor-pointer"
+                          onClick={() => handleRemoveTool(tool.id)}
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          從合集中移除
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 )}
               </div>
             ))}

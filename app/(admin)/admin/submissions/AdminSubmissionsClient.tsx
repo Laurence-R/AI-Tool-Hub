@@ -306,18 +306,19 @@ export function AdminSubmissionsClient() {
                           <>
                             <Button 
                               size="sm"
-                              className="bg-green-600 hover:bg-green-700"
+                              className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm"
                               onClick={() => openReviewDialog(submission, "approve")}
                             >
-                              <Check className="w-4 h-4 mr-1" />
+                              <CheckCircle className="w-4 h-4 mr-1" />
                               通過
                             </Button>
                             <Button 
-                              variant="destructive"
+                              variant="outline"
                               size="sm"
+                              className="border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-950"
                               onClick={() => openReviewDialog(submission, "reject")}
                             >
-                              <X className="w-4 h-4 mr-1" />
+                              <XCircle className="w-4 h-4 mr-1" />
                               拒絕
                             </Button>
                           </>
@@ -466,29 +467,30 @@ export function AdminSubmissionsClient() {
                 {detailDialog.submission.status === "PENDING" && (
                   <DialogFooter className="mt-6">
                     <Button 
-                      variant="outline"
+                      variant="ghost"
                       onClick={() => setDetailDialog({ open: false, submission: null })}
                     >
                       關閉
                     </Button>
                     <Button 
-                      variant="destructive"
+                      variant="outline"
+                      className="border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-950"
                       onClick={() => {
                         setDetailDialog({ open: false, submission: null })
                         openReviewDialog(detailDialog.submission!, "reject")
                       }}
                     >
-                      <X className="w-4 h-4 mr-1" />
+                      <XCircle className="w-4 h-4 mr-1" />
                       拒絕
                     </Button>
                     <Button 
-                      className="bg-green-600 hover:bg-green-700"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm"
                       onClick={() => {
                         setDetailDialog({ open: false, submission: null })
                         openReviewDialog(detailDialog.submission!, "approve")
                       }}
                     >
-                      <Check className="w-4 h-4 mr-1" />
+                      <CheckCircle className="w-4 h-4 mr-1" />
                       通過
                     </Button>
                   </DialogFooter>

@@ -1,0 +1,6 @@
+export { AboutHero } from "./AboutHero"
+export { Mission } from "./Mission"
+export { Stats } from "./Stats"
+export { Team } from "./Team"
+export { Timeline } from "./Timeline"
+export { CTA } from "./CTA"
