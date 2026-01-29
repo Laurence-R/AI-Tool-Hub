@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
     if (pricing && pricing !== "all") {
       where.pricing = pricing
     }
+    // 搜尋條件（SQLite 的 LIKE 本身不區分大小寫）
     if (search) {
       where.OR = [
         { name: { contains: search } },

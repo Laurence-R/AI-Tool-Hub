@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Search, Clock, X, ArrowRight, Trash2, Sparkles } from "lucide-react"
+import { Search, Clock, X, ArrowRight, Trash2, Sparkles, Loader2 } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -19,7 +19,6 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 import { useSearch } from "@/contexts"
-import { searchTools } from "@/lib/tools"
 import { SEARCH_ITEMS } from "@/constants"
 import Image from "next/image"
 import type { ToolBase } from "@/types"
@@ -34,14 +33,39 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const { searchHistory, addToHistory, removeFromHistory, clearHistory } = useSearch()
   const [query, setQuery] = useState("")
   const [toolResults, setToolResults] = useState<ToolBase[]>([])
+  const [isSearching, setIsSearching] = useState(false)
 
-  // 搜尋工具
+  // 搜尋工具（使用 API）
   useEffect(() => {
-    if (query.trim().length > 0) {
-      const results = searchTools(query, 5)
-      setToolResults(results)
-    } else {
+    if (query.trim().length === 0) {
       setToolResults([])
+      return
+    }
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(async () => {
+      setIsSearching(true)
+      try {
+        const response = await fetch(
+          `/api/tools?search=${encodeURIComponent(query.trim())}&limit=5`,
+          { signal: controller.signal }
+        )
+        if (response.ok) {
+          const data = await response.json()
+          setToolResults(data.tools || [])
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name !== 'AbortError') {
+          console.error('搜尋失敗:', error)
+        }
+      } finally {
+        setIsSearching(false)
+      }
+    }, 300) // 防抖 300ms
+
+    return () => {
+      clearTimeout(timeoutId)
+      controller.abort()
     }
   }, [query])
 
@@ -134,8 +158,16 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           </div>
 
           <CommandList className="h-[400px] overflow-y-auto">
+            {/* 搜尋中顯示 */}
+            {isSearching && query.trim() && (
+              <div className="py-12 text-center">
+                <Loader2 className="w-8 h-8 mx-auto mb-4 animate-spin text-primary" />
+                <p className="text-foreground/60">搜尋中...</p>
+              </div>
+            )}
+
             {/* 無結果時顯示 */}
-            {query.trim() && !hasResults && (
+            {!isSearching && query.trim() && !hasResults && (
               <CommandEmpty className="py-12 text-center">
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-foreground/5 flex items-center justify-center">
                   <Search className="w-6 h-6 text-foreground/30" />
