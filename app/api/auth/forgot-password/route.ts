@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { randomBytes } from "crypto"
+
+// 生成安全的隨機 token
+function generateToken(): string {
+  const array = new Uint8Array(32)
+  crypto.getRandomValues(array)
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
+}
 
 export async function POST(request: Request) {
   try {
@@ -27,7 +33,7 @@ export async function POST(request: Request) {
       })
 
       // Create new token (valid for 1 hour)
-      const token = randomBytes(32).toString("hex")
+      const token = generateToken()
       const expires = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
 
       await prisma.passwordResetToken.create({

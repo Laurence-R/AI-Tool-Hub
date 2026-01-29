@@ -38,7 +38,7 @@ export async function GET(
           },
         },
         items: {
-          orderBy: { addedAt: "desc" },
+          orderBy: { createdAt: "desc" },
         },
         _count: {
           select: {
