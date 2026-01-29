@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ToolDetailClient } from "./ToolDetailClient"
-import { getTool, getRelatedTools, getAllToolsFull } from "@/lib/tools"
+import { getToolAsync, getRelatedToolsAsync, getAllToolsFullAsync } from "@/lib/tools"
 import { generateToolMetadata } from "@/lib/seo"
 import { SoftwareApplicationJsonLd, BreadcrumbJsonLd } from "@/components/seo"
 
@@ -13,7 +13,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { id } = await params
-    const tool = getTool(id)
+    const tool = await getToolAsync(id)
     
     if (!tool) {
         return {
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 // 生成靜態路徑
 export async function generateStaticParams() {
-    const tools = getAllToolsFull()
+    const tools = await getAllToolsFullAsync()
     return tools.map(tool => ({
         id: tool.id.toString(),
     }))
@@ -40,13 +40,13 @@ export async function generateStaticParams() {
 
 export default async function ToolDetailPage({ params }: PageProps) {
     const { id } = await params
-    const tool = getTool(id)
+    const tool = await getToolAsync(id)
     
     if (!tool) {
         notFound()
     }
 
-    const relatedTools = getRelatedTools(tool)
+    const relatedTools = await getRelatedToolsAsync(tool)
 
     // 麵包屑導航資料
     const breadcrumbItems = [

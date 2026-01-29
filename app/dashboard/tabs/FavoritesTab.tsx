@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useFavorites } from "@/contexts"
-import { getToolById } from "@/lib/tools"
 import type { Tool } from "@/types"
 import { 
   Heart, 
@@ -18,15 +17,30 @@ import {
 export function FavoritesTab() {
   const { favorites, removeFromFavorites, isLoading } = useFavorites()
   const [tools, setTools] = useState<Tool[]>([])
+  const [loadingTools, setLoadingTools] = useState(false)
 
   useEffect(() => {
-    const favTools = favorites
-      .map(id => getToolById(Number(id)))
-      .filter((t): t is Tool => t !== undefined)
-    setTools(favTools)
+    async function fetchTools() {
+      if (favorites.length === 0) {
+        setTools([])
+        return
+      }
+      setLoadingTools(true)
+      try {
+        const res = await fetch(`/api/tools?ids=${favorites.join(",")}`)
+        const data = await res.json()
+        setTools(data.tools || [])
+      } catch (error) {
+        console.error("Failed to fetch favorite tools:", error)
+        setTools([])
+      } finally {
+        setLoadingTools(false)
+      }
+    }
+    fetchTools()
   }, [favorites])
 
-  if (isLoading) {
+  if (isLoading || loadingTools) {
     return (
       <div className="flex items-center justify-center py-16">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />

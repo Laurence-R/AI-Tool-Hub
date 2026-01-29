@@ -238,24 +238,30 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
   - [x] ReviewSection.tsx → StarRating + StarRatingInput
   - [x] AdminSubmissionsClient.tsx → 共用常量
 
-#### 3.5 數據架構統一 📋
-> ⚠️ **架構優化**：將靜態 JSON 數據遷移至資料庫，統一數據源
+#### 3.5 數據架構統一 ✅
+> 架構優化：將靜態 JSON 數據遷移至資料庫，統一數據源
 
-- [ ] 數據遷移
-  - [ ] 建立數據遷移腳本 (`scripts/migrate-tools.ts`)
-  - [ ] 將 `data/tools/tools.json` 的 20 個工具匯入資料庫
-  - [ ] 保留原始 ID 以維持相容性
-  - [ ] 驗證遷移後數據完整性
-- [ ] API 重構
-  - [ ] `/api/tools` 改為僅從資料庫讀取
-  - [ ] 移除靜態 JSON 合併邏輯
-  - [ ] 新增分頁支援 (`?page=1&limit=20`)
-- [ ] Schema 擴充
-  - [ ] Tool 模型新增欄位 (fullDescription, pricingPlans, screenshots)
-  - [ ] 新增 Prisma migration
-- [ ] 清理
-  - [ ] 標記 `data/tools/tools.json` 為已棄用
-  - [ ] 更新相關文件
+- [x] 數據遷移
+  - [x] 建立數據遷移腳本 (`scripts/migrate-tools.ts`)
+  - [x] 將 `data/tools/tools.json` 的 20 個工具匯入資料庫
+  - [x] 保留原始 ID 以維持相容性
+  - [x] 驗證遷移後數據完整性
+- [x] API 重構
+  - [x] `/api/tools` 改為僅從資料庫讀取
+  - [x] 移除靜態 JSON 合併邏輯
+  - [x] 新增分頁支援 (`?page=1&limit=20`)
+- [x] Schema 擴充
+  - [x] Tool 模型新增欄位 (fullDescription, pricingPlans, screenshots, slug, isFeatured, order)
+  - [x] 新增 Prisma migration (`20260129121922_add_tool_fields`)
+- [x] 清理
+  - [x] 標記 `data/tools/tools.json` 為已棄用 (`data/tools/DEPRECATED.md`)
+  - [x] 更新 `lib/tools.ts` 提供異步函數
+- [x] 元件更新
+  - [x] 更新 `app/tools/[id]/page.tsx` 使用異步函數
+  - [x] 更新 `app/tools/page.tsx` 使用異步函數
+  - [x] 更新 `FavoritesTab.tsx`、`FavoritesPageClient.tsx` 使用 API
+  - [x] 更新 `ComparePageClient.tsx` 使用 API
+  - [x] 更新 `app/api/reviews/user/route.ts` 使用資料庫查詢
 
 ---
 
@@ -318,7 +324,7 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 | Phase 3.2 工具提交 | 2025-01-29 | ✅ 完成 |
 | Phase 3.3 工具合集 | 2025-01-30 | ✅ 完成 |
 | Phase 3.4 模組化重構 | 2025-01-30 | ✅ 完成 |
-| Phase 3.5 數據架構統一 | 2025-02-01 | 📋 計畫中 |
+| Phase 3.5 數據架構統一 | 2025-01-30 | ✅ 完成 |
 | Phase 4.3 管理後台 | 2025-02-15 | 📋 計畫中 |
 | Phase 4.1 智慧推薦 | 2025-02-28 | 📋 計畫中 |
 | Phase 4.2 API 服務 | 2025-03-15 | 📋 計畫中 |

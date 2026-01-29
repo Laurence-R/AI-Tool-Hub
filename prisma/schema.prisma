@@ -78,29 +78,34 @@ model VerificationToken {
 }
 
 // ==================== 工具系統 ====================
-// 注意：工具資料主要存儲在靜態 JSON 中 (lib/tools.ts)
-// 這裡僅保留 Tool model 供未來擴展使用（例如動態新增工具）
-// 但收藏、評論等功能使用 toolId (Int) 直接對應靜態資料的 ID
+// 工具資料統一存儲在資料庫中
+// Phase 3.5: 已將靜態 JSON 遷移至資料庫
 
-// 動態工具 (審核通過後新增)
 model Tool {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  url         String
-  logo        String?
-  category    String
-  pricing     String   // free, freemium, paid
-  features    String?  // JSON 字串
-  tags        String?  // JSON 字串
-  rating      Float    @default(0)
-  reviewCount Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique  // URL 友善的唯一識別碼
+  name            String
+  description     String
+  fullDescription String?  // 完整描述
+  url             String
+  logo            String?
+  category        String
+  pricing         String   // free, freemium, paid
+  features        String?  // JSON 字串
+  tags            String?  // JSON 字串
+  pricingPlans    String?  // JSON 字串 - 定價方案
+  screenshots     String?  // JSON 字串 - 截圖 URL 列表
+  relatedToolIds  String?  // JSON 字串 - 相關工具 ID 列表
+  rating          Float    @default(0)
+  reviewCount     Int      @default(0)
+  isActive        Boolean  @default(true)
+  isFeatured      Boolean  @default(false)  // 精選工具
+  order           Int      @default(0)       // 排序權重
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  // 來源提交
-  submissionId String?       @unique
+  // 來源提交 (用戶提交的工具)
+  submissionId String?        @unique
   submission   ToolSubmission? @relation(fields: [submissionId], references: [id])
 }
 

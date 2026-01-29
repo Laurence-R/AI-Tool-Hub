@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { ToolsPageClient } from "./ToolsPageClient"
 import { ToolListJsonLd, BreadcrumbJsonLd } from "@/components/seo"
 import { generatePageMetadata } from "@/lib/seo"
-import { getAllToolsFull } from "@/lib/tools"
+import { getAllToolsFullAsync } from "@/lib/tools"
 
 export const metadata: Metadata = generatePageMetadata({
     title: "探索 AI 工具",
@@ -11,8 +11,8 @@ export const metadata: Metadata = generatePageMetadata({
     path: "/tools",
 })
 
-export default function ToolsPage() {
-    const tools = getAllToolsFull()
+export default async function ToolsPage() {
+    const tools = await getAllToolsFullAsync()
     
     // 準備工具列表 JSON-LD 資料
     const toolListItems = tools.slice(0, 10).map(tool => ({

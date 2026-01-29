@@ -1,10 +1,9 @@
 "use client"
 
 import { useFavorites } from "@/contexts"
-import { getToolById } from "@/lib/tools"
 import { ToolCard } from "@/components/tools"
 import Link from "next/link"
-import { ArrowLeft, Heart } from "lucide-react"
+import { ArrowLeft, Heart, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Tool } from "@/types"
 import { useEffect, useState } from "react"
@@ -12,13 +11,28 @@ import { useEffect, useState } from "react"
 export function FavoritesPageClient() {
   const { favorites, favoritesCount } = useFavorites()
   const [tools, setTools] = useState<Tool[]>([])
+  const [loading, setLoading] = useState(false)
 
   // 獲取收藏的工具資料
   useEffect(() => {
-    const favTools = favorites
-      .map(id => getToolById(Number(id)))
-      .filter((t): t is Tool => t !== undefined)
-    setTools(favTools)
+    async function fetchTools() {
+      if (favorites.length === 0) {
+        setTools([])
+        return
+      }
+      setLoading(true)
+      try {
+        const res = await fetch(`/api/tools?ids=${favorites.join(",")}`)
+        const data = await res.json()
+        setTools(data.tools || [])
+      } catch (error) {
+        console.error("Failed to fetch favorite tools:", error)
+        setTools([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTools()
   }, [favorites])
 
   return (

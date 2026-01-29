@@ -1,17 +1,16 @@
 /**
  * Tools Data Utilities
  * 工具資料載入與處理函數
+ * Phase 3.5: 已遷移至資料庫
  */
 
 import type { Tool, ToolBase, ToolReview, FilterState } from '@/types';
+import { prisma } from '@/lib/prisma';
 
-// 導入 JSON 資料
-import toolsData from '@/data/tools/tools.json';
+// 評論和分類仍從 JSON 載入（暫時保留）
 import reviewsData from '@/data/tools/reviews.json';
 import categoriesData from '@/data/tools/categories.json';
 
-// 型別轉換
-const TOOLS: Tool[] = toolsData as Tool[];
 const REVIEWS: ToolReview[] = reviewsData as ToolReview[];
 
 /**
@@ -26,60 +25,186 @@ export interface Category {
 const CATEGORIES: Category[] = categoriesData as Category[];
 
 /**
- * 獲取所有工具（基礎資訊）
+ * 將資料庫工具轉換為 Tool 類型
  */
-export function getAllTools(): ToolBase[] {
-  return TOOLS.map(tool => ({
-    id: tool.id,
-    slug: tool.slug,
-    name: tool.name,
-    description: tool.description,
-    category: tool.category,
-    pricing: tool.pricing,
-    rating: tool.rating,
-    reviewCount: tool.reviewCount,
-    logo: tool.logo,
-    tags: tool.tags,
-    url: tool.url,
-    features: tool.features,
-  }));
+function dbToolToTool(dbTool: {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  fullDescription: string | null;
+  url: string;
+  logo: string | null;
+  category: string;
+  pricing: string;
+  features: string | null;
+  tags: string | null;
+  pricingPlans: string | null;
+  screenshots: string | null;
+  relatedToolIds: string | null;
+  rating: number;
+  reviewCount: number;
+  isActive: boolean;
+  isFeatured: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}): Tool {
+  return {
+    id: dbTool.id,
+    slug: dbTool.slug,
+    name: dbTool.name,
+    description: dbTool.description,
+    fullDescription: dbTool.fullDescription || dbTool.description,
+    url: dbTool.url,
+    logo: dbTool.logo || '/images/tools/default-logo.png',
+    category: dbTool.category,
+    pricing: dbTool.pricing as 'free' | 'freemium' | 'paid',
+    features: dbTool.features ? JSON.parse(dbTool.features) : [],
+    tags: dbTool.tags ? JSON.parse(dbTool.tags) : [],
+    pricingPlans: dbTool.pricingPlans ? JSON.parse(dbTool.pricingPlans) : [],
+    screenshots: dbTool.screenshots ? JSON.parse(dbTool.screenshots) : [],
+    relatedToolIds: dbTool.relatedToolIds ? JSON.parse(dbTool.relatedToolIds) : [],
+    rating: dbTool.rating,
+    reviewCount: dbTool.reviewCount,
+  };
 }
 
 /**
- * 獲取所有完整工具資料
+ * 獲取所有工具（基礎資訊）- 異步版本
  */
-export function getAllToolsFull(): Tool[] {
-  return TOOLS;
+export async function getAllToolsAsync(): Promise<ToolBase[]> {
+  const dbTools = await prisma.tool.findMany({
+    where: { isActive: true },
+    orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }, { rating: 'desc' }],
+  });
+  return dbTools.map(tool => dbToolToTool(tool));
 }
 
 /**
- * 根據 ID 獲取工具
+ * 獲取所有完整工具資料 - 異步版本
  */
-export function getToolById(id: number): Tool | undefined {
-  return TOOLS.find(tool => tool.id === id);
+export async function getAllToolsFullAsync(): Promise<Tool[]> {
+  const dbTools = await prisma.tool.findMany({
+    where: { isActive: true },
+    orderBy: [{ isFeatured: 'desc' }, { order: 'asc' }, { rating: 'desc' }],
+  });
+  return dbTools.map(tool => dbToolToTool(tool));
 }
 
 /**
- * 根據 slug 獲取工具
+ * 根據 ID 獲取工具 - 異步版本
  */
-export function getToolBySlug(slug: string): Tool | undefined {
-  return TOOLS.find(tool => tool.slug === slug);
+export async function getToolByIdAsync(id: number): Promise<Tool | null> {
+  const dbTool = await prisma.tool.findUnique({
+    where: { id },
+  });
+  return dbTool ? dbToolToTool(dbTool) : null;
 }
 
 /**
- * 根據 ID 或 slug 獲取工具
+ * 根據 slug 獲取工具 - 異步版本
  */
-export function getTool(idOrSlug: string | number): Tool | undefined {
+export async function getToolBySlugAsync(slug: string): Promise<Tool | null> {
+  const dbTool = await prisma.tool.findUnique({
+    where: { slug },
+  });
+  return dbTool ? dbToolToTool(dbTool) : null;
+}
+
+/**
+ * 根據 ID 或 slug 獲取工具 - 異步版本
+ */
+export async function getToolAsync(idOrSlug: string | number): Promise<Tool | null> {
   if (typeof idOrSlug === 'number') {
-    return getToolById(idOrSlug);
+    return getToolByIdAsync(idOrSlug);
   }
   // 先嘗試解析為數字
   const numId = parseInt(idOrSlug, 10);
   if (!isNaN(numId)) {
-    return getToolById(numId);
+    return getToolByIdAsync(numId);
   }
   // 否則當作 slug 處理
-  return getToolBySlug(idOrSlug);
+  return getToolBySlugAsync(idOrSlug);
+}
+
+/**
+ * 獲取相關工具 - 異步版本
+ */
+export async function getRelatedToolsAsync(tool: Tool): Promise<ToolBase[]> {
+  if (!tool.relatedToolIds || tool.relatedToolIds.length === 0) {
+    return [];
+  }
+  const dbTools = await prisma.tool.findMany({
+    where: { 
+      id: { in: tool.relatedToolIds },
+      isActive: true,
+    },
+  });
+  return dbTools.map(t => dbToolToTool(t));
+}
+
+// ============================================
+// 同步版本（向後相容，使用快取）
+// 注意：這些函數不會即時反映資料庫變更
+// ============================================
+
+let toolsCache: Tool[] | null = null;
+let cacheExpiry = 0;
+const CACHE_TTL = 60000; // 1 分鐘
+
+async function getToolsCache(): Promise<Tool[]> {
+  const now = Date.now();
+  if (!toolsCache || now > cacheExpiry) {
+    toolsCache = await getAllToolsFullAsync();
+    cacheExpiry = now + CACHE_TTL;
+  }
+  return toolsCache;
+}
+
+/**
+ * 獲取所有工具（基礎資訊）- 同步版本（使用快取）
+ * @deprecated 建議使用 getAllToolsAsync
+ */
+export function getAllTools(): ToolBase[] {
+  // 回傳空陣列，實際資料需透過 API 獲取
+  console.warn('getAllTools() is deprecated. Use getAllToolsAsync() or fetch from /api/tools');
+  return [];
+}
+
+/**
+ * 獲取所有完整工具資料 - 同步版本
+ * @deprecated 建議使用 getAllToolsFullAsync
+ */
+export function getAllToolsFull(): Tool[] {
+  console.warn('getAllToolsFull() is deprecated. Use getAllToolsFullAsync() or fetch from /api/tools');
+  return [];
+}
+
+/**
+ * 根據 ID 獲取工具 - 同步版本
+ * @deprecated 建議使用 getToolByIdAsync
+ */
+export function getToolById(id: number): Tool | undefined {
+  console.warn('getToolById() is deprecated. Use getToolByIdAsync() or fetch from /api/tools');
+  return undefined;
+}
+
+/**
+ * 根據 slug 獲取工具 - 同步版本
+ * @deprecated 建議使用 getToolBySlugAsync
+ */
+export function getToolBySlug(slug: string): Tool | undefined {
+  console.warn('getToolBySlug() is deprecated. Use getToolBySlugAsync() or fetch from /api/tools');
+  return undefined;
+}
+
+/**
+ * 根據 ID 或 slug 獲取工具 - 同步版本
+ * @deprecated 建議使用 getToolAsync
+ */
+export function getTool(idOrSlug: string | number): Tool | undefined {
+  console.warn('getTool() is deprecated. Use getToolAsync() or fetch from /api/tools');
+  return undefined;
 }
 
 /**

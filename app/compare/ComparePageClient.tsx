@@ -1,7 +1,6 @@
 "use client"
 
 import { useCompare, MAX_COMPARE_ITEMS } from "@/contexts"
-import { getTool } from "@/lib/tools"
 import Image from "next/image"
 import Link from "next/link"
 import { 
@@ -13,7 +12,8 @@ import {
   Minus,
   ArrowLeft,
   Share2,
-  Trash2
+  Trash2,
+  Loader2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { PricingBadge } from "@/components/ui/pricing-badge"
@@ -23,12 +23,33 @@ import { useEffect, useState } from "react"
 export function ComparePageClient() {
   const { compareList, removeFromCompare, clearCompare, compareCount } = useCompare()
   const [tools, setTools] = useState<(Tool | undefined)[]>([])
+  const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
 
   // 獲取完整工具資料
   useEffect(() => {
-    const fullTools = compareList.map(t => getTool(t.id))
-    setTools(fullTools)
+    async function fetchTools() {
+      if (compareList.length === 0) {
+        setTools([])
+        return
+      }
+      setLoading(true)
+      try {
+        const ids = compareList.map(t => t.id).join(",")
+        const res = await fetch(`/api/tools?ids=${ids}`)
+        const data = await res.json()
+        // 保持與 compareList 相同的順序
+        const toolsMap = new Map((data.tools || []).map((t: Tool) => [t.id, t]))
+        const orderedTools = compareList.map(item => toolsMap.get(item.id) as Tool | undefined)
+        setTools(orderedTools)
+      } catch (error) {
+        console.error("Failed to fetch compare tools:", error)
+        setTools([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTools()
   }, [compareList])
 
   // 計算空位數量

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { getToolById } from "@/lib/tools"
 
 // GET /api/reviews/user - 獲取當前使用者的所有評論
 export async function GET(request: NextRequest) {
@@ -28,9 +27,16 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    // 獲取對應的工具資訊（從靜態資料）
+    // 獲取對應的工具資訊（從資料庫）
+    const toolIds = [...new Set(reviews.map(r => r.toolId))]
+    const tools = await prisma.tool.findMany({
+      where: { id: { in: toolIds } },
+      select: { id: true, name: true, logo: true, category: true }
+    })
+    const toolsMap = new Map(tools.map(t => [t.id, t]))
+
     const formattedReviews = reviews.map(review => {
-      const tool = getToolById(review.toolId)
+      const tool = toolsMap.get(review.toolId)
       return {
         id: review.id,
         title: review.title,
