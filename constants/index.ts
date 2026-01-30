@@ -47,3 +47,32 @@ export {
     SUBMISSION_STATUS_LABELS,
     getSubmissionStatusLabel
 } from "./labels"
+
+// 用戶個人資料常量
+export {
+    JOB_ROLES,
+    USAGE_PURPOSES,
+    INDUSTRIES,
+    COMPANY_SIZES,
+    TECH_LEVELS,
+    BUDGET_PREFERENCES,
+    INTEREST_CATEGORIES,
+    getJobRoleLabel,
+    getUsagePurposeLabel,
+    getIndustryLabel,
+    getCompanySizeLabel,
+    getTechLevelLabel,
+    getBudgetPreferenceLabel,
+    getInterestCategoryLabel,
+} from "./user-profile"
+
+export type {
+    JobRole,
+    UsagePurpose,
+    Industry,
+    CompanySize,
+    TechLevel,
+    BudgetPreference,
+    InterestCategory,
+    UserProfile,
+} from "./user-profile"

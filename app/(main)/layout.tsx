@@ -1,4 +1,5 @@
 import { Navigation, Footer } from "@/components/layout"
+import { OnboardingDialog } from "@/components/shared/OnboardingDialog"
 
 export default function MainLayout({
   children,
@@ -12,6 +13,7 @@ export default function MainLayout({
         {children}
       </main>
       <Footer />
+      <OnboardingDialog />
     </>
   )
 }

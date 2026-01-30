@@ -337,6 +337,43 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
   - [x] 合集移除工具按鈕改為下拉選單形式
   - [x] 審核按鈕配色美化 (翠綠通過/玫瑰拒絕)
 
+#### 4.5 用戶資料收集與個人化基礎 ✅
+> 為智慧推薦系統奠定基礎
+
+- [x] User Schema 擴充
+  - [x] jobRole - 職業角色 (開發者、設計師、行銷、PM、學生等)
+  - [x] usagePurpose - 使用目的 (工作、學習、個人專案、創業)
+  - [x] industry - 行業領域 (科技、金融、教育、醫療等)
+  - [x] companySize - 公司規模 (個人、小型、中型、大型)
+  - [x] techLevel - 技術程度 (初學者、中級、進階)
+  - [x] budgetPreference - 預算偏好 (免費、付費、企業)
+  - [x] interests - 感興趣類別 (JSON array)
+  - [x] onboardingCompleted - 是否完成引導
+- [x] 常數定義 (`constants/user-profile.ts`)
+  - [x] JOB_ROLES - 9 種職業選項
+  - [x] USAGE_PURPOSES - 4 種使用目的
+  - [x] INDUSTRIES - 11 種行業
+  - [x] COMPANY_SIZES - 4 種規模
+  - [x] TECH_LEVELS - 3 種程度
+  - [x] BUDGET_PREFERENCES - 3 種偏好
+  - [x] INTEREST_CATEGORIES - 12 種類別
+- [x] API 擴充 (`/api/user/profile`)
+  - [x] GET - 獲取完整個人資料
+  - [x] PATCH - 更新所有新欄位
+- [x] Onboarding 流程
+  - [x] OnboardingDialog 元件 (4 步驟引導)
+  - [x] 首次登入自動顯示
+  - [x] 可跳過選項
+  - [x] 進度指示器 (Progress bar)
+  - [x] 動畫過場 (Framer Motion)
+- [x] 儀表板整合
+  - [x] SettingsTab 新增「個人資料」區塊
+  - [x] 所有欄位可編輯
+  - [x] 興趣類別多選 (最多 5 個)
+- [x] 新增套件
+  - [x] framer-motion - 動畫庫
+  - [x] Progress (shadcn/ui)
+
 #### 4.1 智慧推薦
 - [ ] 基於使用歷史的推薦
 - [ ] 相似工具推薦演算法
@@ -362,6 +399,7 @@ AI Tool Hub 是一個 AI 工具發現、比較與評價平台，幫助用戶找�
 | Phase 3.5 數據架構統一 | 2025-01-30 | ✅ 完成 |
 | Phase 4.3 管理後台 | 2026-01-29 | ✅ 完成 |
 | Phase 4.4 UI/UX 優化 | 2026-01-29 | ✅ 完成 |
+| Phase 4.5 用戶資料收集 | 2026-01-30 | ✅ 完成 |
 | Phase 4.1 智慧推薦 | 2025-02-28 | 📋 計畫中 |
 | Phase 4.2 API 服務 | 2025-03-15 | 📋 計畫中 |
 

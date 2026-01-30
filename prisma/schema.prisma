@@ -34,6 +34,16 @@ model User {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
+  // 用戶個人資料 (Phase 4.5: 個人化推薦)
+  jobRole           String?   // 職業角色: developer, designer, marketer, pm, student, researcher, other
+  usagePurpose      String?   // 使用目的: work, learning, personal, startup
+  industry          String?   // 行業領域: tech, finance, education, healthcare, ecommerce, media, other
+  companySize       String?   // 公司規模: individual, small, medium, large
+  techLevel         String?   // 技術程度: beginner, intermediate, advanced
+  budgetPreference  String?   // 預算偏好: free, paid, enterprise
+  interests         String?   // 感興趣類別 (JSON array): ["writing", "coding", "design"]
+  onboardingCompleted Boolean @default(false) // 是否完成引導流程
+
   // 關聯
   accounts      Account[]
   sessions      Session[]

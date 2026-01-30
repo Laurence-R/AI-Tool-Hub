@@ -26,7 +26,24 @@ import {
   AlertTriangle,
   LogOut,
   ChevronRight,
+  UserCircle,
 } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  JOB_ROLES,
+  USAGE_PURPOSES,
+  INDUSTRIES,
+  COMPANY_SIZES,
+  TECH_LEVELS,
+  BUDGET_PREFERENCES,
+  INTEREST_CATEGORIES,
+} from "@/constants/user-profile"
 
 // 密碼強度檢查
 const checkPasswordStrength = (password: string) => {
@@ -56,13 +73,24 @@ interface SettingsTabProps {
 }
 
 export function SettingsTab({ user }: SettingsTabProps) {
-  const [activeSection, setActiveSection] = useState<"security" | "notifications" | "appearance" | "danger" | null>(null)
+  const [activeSection, setActiveSection] = useState<"profile" | "security" | "notifications" | "appearance" | "danger" | null>(null)
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">帳號設定</h2>
       
       <div className="space-y-4">
+        {/* Profile Section */}
+        <SettingsSection
+          icon={UserCircle}
+          title="個人資料"
+          description="管理您的個人偏好和推薦設定"
+          isOpen={activeSection === "profile"}
+          onToggle={() => setActiveSection(activeSection === "profile" ? null : "profile")}
+        >
+          <ProfileSettings />
+        </SettingsSection>
+
         {/* Security Section */}
         <SettingsSection
           icon={Shield}
@@ -156,6 +184,219 @@ function SettingsSection({
           {children}
         </div>
       )}
+    </div>
+  )
+}
+
+// Profile Settings
+function ProfileSettings() {
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState<{ type: "success" | "error", text: string } | null>(null)
+  const [profile, setProfile] = useState({
+    jobRole: "",
+    usagePurpose: "",
+    industry: "",
+    companySize: "",
+    techLevel: "",
+    budgetPreference: "",
+    interests: [] as string[],
+  })
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/user/profile")
+        if (res.ok) {
+          const data = await res.json()
+          setProfile({
+            jobRole: data.profile.jobRole || "",
+            usagePurpose: data.profile.usagePurpose || "",
+            industry: data.profile.industry || "",
+            companySize: data.profile.companySize || "",
+            techLevel: data.profile.techLevel || "",
+            budgetPreference: data.profile.budgetPreference || "",
+            interests: data.profile.interests || [],
+          })
+        }
+      } catch (error) {
+        console.error("獲取個人資料失敗:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProfile()
+  }, [])
+
+  const handleSave = async () => {
+    setSaving(true)
+    setMessage(null)
+    try {
+      const res = await fetch("/api/user/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      })
+      if (res.ok) {
+        setMessage({ type: "success", text: "個人資料已更新" })
+      } else {
+        setMessage({ type: "error", text: "更新失敗，請稍後再試" })
+      }
+    } catch {
+      setMessage({ type: "error", text: "網路錯誤" })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleInterestToggle = (value: string) => {
+    if (profile.interests.includes(value)) {
+      setProfile({ ...profile, interests: profile.interests.filter(i => i !== value) })
+    } else if (profile.interests.length < 5) {
+      setProfile({ ...profile, interests: [...profile.interests, value] })
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6">
+      {message && (
+        <div className={`p-3 rounded-lg flex items-center gap-2 ${
+          message.type === "success" ? "bg-green-500/10 text-green-600" : "bg-destructive/10 text-destructive"
+        }`}>
+          {message.type === "success" ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" />}
+          {message.text}
+        </div>
+      )}
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        {/* Job Role */}
+        <div className="space-y-2">
+          <Label>職業角色</Label>
+          <Select value={profile.jobRole} onValueChange={(v) => setProfile({ ...profile, jobRole: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇職業角色" />
+            </SelectTrigger>
+            <SelectContent>
+              {JOB_ROLES.map(role => (
+                <SelectItem key={role.value} value={role.value}>{role.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Usage Purpose */}
+        <div className="space-y-2">
+          <Label>使用目的</Label>
+          <Select value={profile.usagePurpose} onValueChange={(v) => setProfile({ ...profile, usagePurpose: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇使用目的" />
+            </SelectTrigger>
+            <SelectContent>
+              {USAGE_PURPOSES.map(purpose => (
+                <SelectItem key={purpose.value} value={purpose.value}>{purpose.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Industry */}
+        <div className="space-y-2">
+          <Label>行業領域</Label>
+          <Select value={profile.industry} onValueChange={(v) => setProfile({ ...profile, industry: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇行業領域" />
+            </SelectTrigger>
+            <SelectContent>
+              {INDUSTRIES.map(industry => (
+                <SelectItem key={industry.value} value={industry.value}>{industry.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Company Size */}
+        <div className="space-y-2">
+          <Label>公司規模</Label>
+          <Select value={profile.companySize} onValueChange={(v) => setProfile({ ...profile, companySize: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇公司規模" />
+            </SelectTrigger>
+            <SelectContent>
+              {COMPANY_SIZES.map(size => (
+                <SelectItem key={size.value} value={size.value}>{size.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Tech Level */}
+        <div className="space-y-2">
+          <Label>技術程度</Label>
+          <Select value={profile.techLevel} onValueChange={(v) => setProfile({ ...profile, techLevel: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇技術程度" />
+            </SelectTrigger>
+            <SelectContent>
+              {TECH_LEVELS.map(level => (
+                <SelectItem key={level.value} value={level.value}>{level.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Budget Preference */}
+        <div className="space-y-2">
+          <Label>預算偏好</Label>
+          <Select value={profile.budgetPreference} onValueChange={(v) => setProfile({ ...profile, budgetPreference: v })}>
+            <SelectTrigger>
+              <SelectValue placeholder="選擇預算偏好" />
+            </SelectTrigger>
+            <SelectContent>
+              {BUDGET_PREFERENCES.map(budget => (
+                <SelectItem key={budget.value} value={budget.value}>{budget.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Interests */}
+      <div className="space-y-2">
+        <Label>感興趣類別 (最多 5 個)</Label>
+        <p className="text-xs text-muted-foreground mb-2">已選擇 {profile.interests.length} / 5</p>
+        <div className="flex flex-wrap gap-2">
+          {INTEREST_CATEGORIES.map(category => (
+            <button
+              key={category.value}
+              type="button"
+              onClick={() => handleInterestToggle(category.value)}
+              disabled={profile.interests.length >= 5 && !profile.interests.includes(category.value)}
+              className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                profile.interests.includes(category.value)
+                  ? "bg-primary text-white border-primary"
+                  : "border-border hover:border-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <Button onClick={handleSave} disabled={saving}>
+          {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+          儲存變更
+        </Button>
+      </div>
     </div>
   )
 }
