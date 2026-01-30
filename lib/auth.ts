@@ -32,6 +32,11 @@ const providers: Provider[] = [
         throw new Error("找不到此帳號，請先註冊")
       }
 
+      // 檢查帳號是否被停用
+      if (user.status === "SUSPENDED") {
+        throw new Error("此帳號已被停用，請聯繫管理員")
+      }
+
       const isPasswordValid = await bcrypt.compare(password, user.password)
 
       if (!isPasswordValid) {
@@ -79,6 +84,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   providers,
   callbacks: {
+    // OAuth 登入時檢查帳號狀態
+    async signIn({ user, account }) {
+      // 跳過 credentials 登入（已在 authorize 中檢查）
+      if (account?.provider === "credentials") {
+        return true
+      }
+      
+      // OAuth 登入：檢查用戶是否被停用
+      if (user?.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { status: true },
+        })
+        
+        if (dbUser?.status === "SUSPENDED") {
+          // 返回錯誤 URL
+          return "/login?error=AccountSuspended"
+        }
+      }
+      
+      return true
+    },
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id
@@ -90,11 +117,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.image = session.image
       }
 
+      // 定期檢查帳號狀態 (每次 JWT 更新時)
+      if (token.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id as string },
+          select: { status: true },
+        })
+        
+        // 如果帳號被停用，標記 token 為無效
+        if (dbUser?.status === "SUSPENDED") {
+          token.suspended = true
+        } else {
+          token.suspended = false
+        }
+      }
+
       return token
     },
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
+        
+        // 如果帳號被停用，返回空 session 強制登出
+        if (token.suspended) {
+          return { ...session, user: undefined, expires: new Date(0).toISOString() }
+        }
       }
       return session
     },

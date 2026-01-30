@@ -96,6 +96,8 @@ export function LoginForm() {
         return "OAuth 登入失敗，請稍後再試"
       case "Configuration":
         return "OAuth 尚未設定，請使用 Email 登入"
+      case "AccountSuspended":
+        return "此帳號已被停用，請聯繫管理員"
       default:
         return error
     }
